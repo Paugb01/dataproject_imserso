@@ -34,5 +34,6 @@ Este proyecto está siendo llevado a cabo por un equipo altamente competente, co
 - Julián Merino
 - Toni Faura
 - Hugo Fernando Maria Rodriguez
+- Paco Tudela
 
 Este readme sirve como guía inicial para el desarrollo del proyecto. ¡Éxito en la creación de una solución innovadora y eficiente para el Imserso!
