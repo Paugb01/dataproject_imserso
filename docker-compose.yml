@@ -29,6 +29,15 @@ services:
     networks:
       - postgres
     restart: unless-stopped
+  
+  python_insert_tables:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: on-failure
+    command: python3 db_ingestion.py
+    depends_on:
+      - python_create_tables
  
 networks:
   postgres:
