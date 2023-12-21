@@ -12,7 +12,7 @@ Existen varias formas de conectarse a una base de datos en CloudSQL. La primera 
 
 El uso de un proxy, por otro lado, nos permite trabajar desde cualquier ubicación sin la necesidad de configurar permisos para direcciones específicas. 
 
-![Esquema](images/image1.jpg)
+![Esquema](images/image1.png)
 
 ### Instalación en tu máquina/docker:
 
