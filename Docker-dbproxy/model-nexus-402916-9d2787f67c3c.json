@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "model-nexus-402916",
+  "private_key_id": "9d2787f67c3ce18ddeaca88317857b1a6c4b90e9",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC5Movs2DXZh4Qo\nD2LVRKnryGwuTr3K2bHQ/QIyFpeA+CfDF3pb6yCaebpRkGLTK9F/ai9swL1FarBV\nwSo2iyk5OdEEKsfOLBGZm/sPBnIBkup2KcWPyexeTQjWWqeQeqQ7RX+u7NiIX2vn\nj/0YSBlskdL+pwDN053ZrmfSqSJa7FLgz09Ky51qWBfZmAgVpiNEhkSO3LrgaQQz\nNSALZ7qBxz5DpbSmvEC/xDVgVShCiAtSFb8JxYi6XWzWeFZpokk/1GTHDYxQ3PDs\nhUKxamFd2mHcXmBjGQzb7OWKZsnj/E07ehUA6pBOL5zIboehZx4Qo0dJwgMKS+A1\nK3zLhQb3AgMBAAECggEANsdtvhPB8eL0w0ixyjVyMWzqGtRtrSexQgjkcl5eV+aP\nFFTIe5HT5f1lkCSuJppKcG6/MmLcWUESgXsOem21NtkUKzBgQ2qjlhUeMLaOWErV\nkTgP2NU4VjhhCc5sy/6Kv4FyIBKshcH7z9W2Xk1NP+DuUSaixT737OB6k0Q2BkBp\n7+NseC9qL3MLw7zBBawaRKpJOcfTHAV3+rMjX7ySHgfF/ONqbIlTqU075eUIxUdw\nsQp8bvPqz9VuuO7op1MYOinxCsJnekgqNLBMI0UbzuQbTQfHIN6/KPO1bDelmKFv\nmNoOKg5Sv5iRYDTEQxyYXwGs11yqTKtZyalNENiCeQKBgQDgliR8j09yTfkyPvvq\n1emmv84MmgljPq5U9KaQORpoVpst47ZwVJ1apYhw6z6sn5NfIfdIRQA0bxd/Lv1l\nsd47m9ox4muqxW7dFpZ1W/e/oToLWFr+X/IGfSFySdPdSC+MYoUthd3yZwWadDTx\nf2Z85jdZPmCyTbyDHXOlV9ey3QKBgQDTGfwg2f4chReHQzSAoeHcRAChBenfk8am\nNYx8yw14sjFOeWdipIDpbA9MxNccgktYNEAKbu02+tTnPpNxa9jswQPqb2wkcAg2\nZd9d0GgKGsKr1qEkA66tawZ5+aFBXJGS5lNoIgVG3NvywxMwr22nEveL75neScb+\nrqLY9/fR4wKBgQCRCQUpF5eT1r0OcNRZNKm+kPFs+/ECEZGdtZz3WJkwNnXibcL8\nyfgQeQQjABiqfCc88X9zQXQ/aFrBPMRR70r4Lc78Fh+32eadip/BzJGzRFhqyTWC\nPs3a2OZHm1vh9GMYgutEmcXabCOXOmKSbtbt4/JshLcHjuIlvlhXt+HJVQKBgHfd\n8GFDBtxw4jxG99/2i8ZDwsusDPGL+qdUDrKppbucCw1ROFg1qpFgb4ua1b51aYzr\nFlYWSJIIea3YxWYI5AMDUlLi89f42WDyFZQyi3D5YwKp+5P0l1IXTHUkPuFbS7nL\nGR8u+ioTrLy68gGaCzxsM6383jTvVZQ123gxzUEbAoGBAKxD9TB+FW5z5wbxwfLp\nQjLUM6pZRC3mEi3njH/2uAVOIdJ1QkoR1GcyIr+l9rGeSyM0mD4AqSX4jzf2pmHV\nZOcBG83NqvNVyS8IPHUmYcjRbxSH/ak7MKaEWifzlrRhuuhJaMCH5/hWrR5xwNOJ\nbsxmGcltYDsYqSbRpoF9b0Xz\n-----END PRIVATE KEY-----\n",
+  "client_email": "imserso-docker@model-nexus-402916.iam.gserviceaccount.com",
+  "client_id": "101154260250048565720",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/imserso-docker%40model-nexus-402916.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
