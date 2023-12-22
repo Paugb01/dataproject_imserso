@@ -4,7 +4,7 @@ from psycopg2 import sql
 # Parámetros de conexión
 conection_parameters = {
     'dbname': 'postgres', 
-    'user': 'paugarciabardisa',
+    'user': 'postgres',
     'password': 'Welcome01',
     'host': 'localhost',
     'port': '5432',
