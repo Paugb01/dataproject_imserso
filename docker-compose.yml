@@ -8,12 +8,12 @@ services:
     restart: always    
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: E&uoj)~'8z-'!r}&
+      POSTGRES_PASSWORD: Welcome01
       POSTGRES_DB: DBImserso
     ports:
       - "5432:5432"
     volumes:     
-      - ./sql/imserso_arranged_v1.sql:/docker-entrypoint-initdb.d/imserso_arranged_v1.sql
+      - ./sql/imserso.sql:/docker-entrypoint-initdb.d/imserso.sql
 
   python_bdd_imserso:
       container_name: python
