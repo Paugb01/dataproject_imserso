@@ -61,5 +61,7 @@ Este readme sirve como guía inicial para el desarrollo del proyecto. ¡Éxito e
 -  Trabajo inmediato:
    -  Inyectar datos en tabla usuarios (100 basta para probar)
    -  Inyectar datos en tabla programas:
-      -  2 programas por 
-      -  2 programas iguales (diferente id) pero fechas solapadas
+      -  2 programas por región de destino (costa insular, costa peninsular, interior y ya iremos ampliando y definiendo cuando funcione) y origen diferente.
+   - Inyectar datos en la tabla solicitudes:
+     - Hacer combinaciones de usuario_id y programa_id (que no se repitan, es decir un mismo usuario no puede solicitar lo mismo dos veces)
+     - Como idea: cada usuario pida todos los programas una vez, en esta MVP serían 100 usuarios * 6 programas (3 regiones, 2 programas por región) = 600 solicitudes, ¿no?
