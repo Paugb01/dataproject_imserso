@@ -1,48 +1,27 @@
-version: '3.5'
- 
+version: '3'
+
 services:
+
   postgres:
     container_name: postgres_containerimserso
-    image: postgres:12.1
+    image: postgres:latest
+    restart: always    
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-Welcome01}
-      PGDATA: /data/postgres
-    volumes:
-       - postgres:/data/postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: E&uoj)~'8z-'!r}&
+      POSTGRES_DB: DBImserso
     ports:
       - "5432:5432"
-    networks:
-      - postgres
-    restart: unless-stopped
-   
-  pgadmin:
-    container_name: pgadmin_container
-    image: dpage/pgadmin4:4.16
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
-    volumes:
-       - pgadmin:/root/.pgadmin
-    ports:
-      - "${PGADMIN_PORT:-5050}:80"
-    networks:
-      - postgres
-    restart: unless-stopped
-  
-  python_insert_tables:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    restart: on-failure
-    command: python3 db_ingestion.py
-    depends_on:
-      - python_create_tables
+    volumes:     
+      - ./sql/imserso_arranged_v1.sql:/docker-entrypoint-initdb.d/imserso_arranged_v1.sql
+
+  python_bdd_imserso:
+      container_name: python
+      build:
+        context: .
+        dockerfile: Dockerfile
+      depends_on:
+        - postgres  
  
-networks:
-  postgres:
-    driver: bridge
- 
-volumes:
-    postgres:
-    pgadmin:
+      
+      
