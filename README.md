@@ -37,3 +37,29 @@ Este proyecto está siendo llevado a cabo por un equipo altamente competente, co
 - Paco Tudela
 
 Este readme sirve como guía inicial para el desarrollo del proyecto. ¡Éxito en la creación de una solución innovadora y eficiente para el Imserso!
+
+## Detalles de desarrollo - MVP
+
+- Nos basamos en la siguiente estructura SQL para la MVP
+- ![Alt text](images/tables_mvp.png)
+
+
+- Fin de MVP: 
+  - Procesar usuarios, programas y solicitudes con los criterios actuales de IMSERSO (es decir, sin incluir las nuestras).
+  - Generar una puntuación por usuario.
+  - Rankear las solicitudes.
+
+- Tabla programas:
+  - Contiene programa_id y el resto de características del programa.
+  - Dos programas pueden tener idénticas características y diferentes fechas de entrada y/o salida.
+
+-  Tabla solicitudes:
+   -  Enlaza usuarios mediante usuario_id y programas mediante programa_id
+   -  No contiene fechas, ya que las fechas son únicas para cada programa: un usuario se inscribe en una programa con unas fechas predeterminadas ofrecidas.
+   -  En un futuro posterior a MVP se puede considerar enlazar más de un usuario a un programa/solicitud - problemas del futuro.
+
+-  Trabajo inmediato:
+   -  Inyectar datos en tabla usuarios (100 basta para probar)
+   -  Inyectar datos en tabla programas:
+      -  2 programas por 
+      -  2 programas iguales (diferente id) pero fechas solapadas
