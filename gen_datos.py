@@ -11,7 +11,7 @@ import psycopg2
 
 def generar_datos_fake(cantidad):
     faker = Faker(['es-ES'])
-    hoy = datetime.date.today()
+    hoy = datetime.date(2023,12,22)
     Faker.seed(1000)
     random.seed(1000)
     np.random.seed(1000)
@@ -31,8 +31,8 @@ def generar_datos_fake(cantidad):
         telefono = faker.phone_number()
         email = faker.ascii_email()
         discapacidad = np.random.choice(tipo_discapacidad, p=(0.75, 0.20, 0.05), size=1)[0]
-        renta = random.randint(484,3175)
-        enfermedad = random.choice([True, False])
+        renta = random.uniform(484.61,3175)
+        enfermedad = np.random.choice([True, False], p=(0.20, 0.80), size=1)[0]
         viudedad = np.random.choice(viud, p=(0.70, 0.30), size=1)[0]
         pa21_22 = random.choice([True, False]) # Participación año 21-22
         if pa21_22 is True:
@@ -44,7 +44,7 @@ def generar_datos_fake(cantidad):
             viajes_22_23 = np.random.choice(prob_viajes22_23, p=(0.70, 0.30), size=1)[0]
         else:
             viajes_22_23 = 0
-        tipo_familia = np.random.choice(tp_familia, p=(0.70, 0.25, 0.05), size=1)[0] #Selecciona un valor según el tipo de familia
+        tipo_familia = np.random.choice(tp_familia, p=(0.75, 0.20, 0.05), size=1)[0] #Selecciona un valor según el tipo de familia
         id_solicitante = random.randint(1,cantidad) 
     
         jubilados.append([nombre,apellido,nif,fecha_nacimiento,edad,telefono,email,discapacidad,renta,enfermedad,viudedad,pa21_22,viajes_21_22,pa22_23,viajes_22_23,tipo_familia,id_solicitante])
@@ -54,7 +54,7 @@ def generar_datos_fake(cantidad):
     
     return jubilados 
 
-jubilados = generar_datos_fake(1500) 
+jubilados = generar_datos_fake(100) 
 
 
 #DATAFRAME PRINCIPAL
@@ -66,7 +66,7 @@ print(df)
 df_usuarios = df[['id_solicitante','nombre', 'apellido', 'nif', 'fecha_nacimiento', 'edad','telefono','email']]
 df_renta = df[['id_solicitante', 'renta']]
 df_familia = df[['id_solicitante', 'tipo_familia']]
-df_discapcidad = df[['id_solicitante', 'discapacidad']]
+df_discapacidad = df[['id_solicitante', 'discapacidad']]
 df_enfermedad = df[['id_solicitante','enfermedad']]
 df_vta = df[['id_solicitante','pa21_22','viajes_21_22','pa22_23','viajes_22_23']]
 df_viudedad = df[['id_solicitante','viudedad']]
@@ -76,19 +76,27 @@ df_viudedad = df[['id_solicitante','viudedad']]
 conn = psycopg2.connect(
     database="postgres", 
     user='postgres',
-    password='password', 
-    host='127.0.0.1', 
+    password="E&uoj)~'8z-'!r}&", 
+    host='localhost', 
     port= '5432'
 )
 
 try:
-    connection = psycopg2.connect(**conn)
     cursor = conn.cursor()
     print("Conexión exitosa a la base de datos.")
 
-#FALTA INSERTAR DATOS
+    for index, row in df_discapacidad.iterrows():
+        cursor.execute(
+            """
+            INSERT INTO discapacidad (id_solicitante, discapacidad)
+            VALUES (%s, %s)
+            """,
+            (row['id_solicitante'], row['discapacidad'].item())  
+        )
+    conn.commit()
+    print("Inserción exitosa en la base de datos.")
 
 except psycopg2.Error as e:
     print("Error al conectar a la base de datos:", e)
 
-connection.close()
+conn.close()
