@@ -1,3 +1,7 @@
+DROP TABLE IF EXISTS solicitudes;
+DROP TABLE IF EXISTS programas;
+DROP TABLE IF EXISTS usuarios;
+
 CREATE TABLE public.usuarios (
     usuario_id int4 NOT NULL,
     nif varchar(50) NOT NULL, 
