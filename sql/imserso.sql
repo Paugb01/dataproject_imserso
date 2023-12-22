@@ -12,7 +12,7 @@ CREATE TABLE public.usuarios (
     renta int4 NULL, 
     tipo_discapacidad int4 NULL, 
     tipo_familia int4 NULL, 
-    CONSTRAINT usuarios_pkey PRIMARY KEY (usuario_id, nif)
+    CONSTRAINT usuarios_pkey PRIMARY KEY (usuario_id)
 );
 
 -- CREATE TABLE public.grupos (
@@ -55,9 +55,10 @@ CREATE TABLE public.programas (
 -- );
 
 CREATE TABLE public.solicitudes (
+    solicitudes_id int4 NOT NULL, 
     usuario_id int4 NOT NULL,
     programa_id int4 NULL,
-    CONSTRAINT solicitudes_pkey PRIMARY KEY (usuario_id),
+    CONSTRAINT solicitudes_pkey PRIMARY KEY (solicitudes_id),
     CONSTRAINT solicitudes_usuario_id_fkey FOREIGN KEY (usuario_id) REFERENCES public.usuarios (usuario_id),
     CONSTRAINT solicitudes_programa_id_fkey FOREIGN KEY (programa_id) REFERENCES public.programas (programa_id)
 );
