@@ -65,3 +65,16 @@ Este readme sirve como guía inicial para el desarrollo del proyecto. ¡Éxito e
    - Inyectar datos en la tabla solicitudes:
      - Hacer combinaciones de usuario_id y programa_id (que no se repitan, es decir un mismo usuario no puede solicitar lo mismo dos veces)
      - Como idea: cada usuario pida todos los programas una vez, en esta MVP serían 100 usuarios * 6 programas (3 regiones, 2 programas por región) = 600 solicitudes, ¿no?
+
+-  23/12/2023
+   -  jumepe: he creado un fichero imserso_jmp.sql nuevo que cambia usuario_id a string y le mete el random de NIF del fichero de generación e inserción de datos gen_datos_simple.py
+   -  He cambiado el fichero de generacion e inserción de datos gen_datos_simple.py
+   -  He creado un fichero de generación e inserción de datos a la tabla programas gen_datos_programas.py que hace:
+      -  Genera 10 programas
+      -  programa_id int correlativo de 1-10
+      -  nombre_programa con la sintaxis origen - destino
+      -  fecha_salida y fecha_vuelta limitado a meses de invierno y fecha_vuelta es posterior a fecha_salida
+      -  destino es aleatorio entre tres opciones: Costa insular, Costa peninsular e interior
+      -  Todo esto se puede cambiar!
+      -  ![Alt text](images/programas_01.png)
+      -  ![Alt text](images/usuarios_01.png)

@@ -41,12 +41,12 @@ print(df)
 #DATADRAMEs SECUNDARIOS
 df_usuarios = df[['nombre','apellido','nif','fecha_nacimiento','edad','discapacidad','renta','tipo_familia']]
 
-'''
+
  #CONEXIÓN BBDD
 conn = psycopg2.connect(
     database="postgres", 
     user='postgres',
-    password="E&uoj)~'8z-'!r}&", 
+    password="Welcome01", 
     host='localhost', 
     port= '5432'
 )
@@ -58,10 +58,10 @@ try:
     for index, row in df_usuarios.iterrows():
         cursor.execute(
             """
-            INSERT INTO usuarios (usuario_id,nombre,apellidos)
+            INSERT INTO usuarios (usuario_id,nombre,apellidos, edad, fecha_nacimiento, renta, tipo_discapacidad, tipo_familia)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
             """,
-            (row['nif'],row['nombre'], row['apellido'])  
+            (row['nif'],row['nombre'], row['apellido'], row['edad'], row['fecha_nacimiento'], row['renta'], row['discapacidad'], row['tipo_familia'])  
         )
     conn.commit()
     print("Inserción exitosa en la base de datos.")
@@ -69,4 +69,4 @@ try:
 except psycopg2.Error as e:
     print("Error al conectar a la base de datos:", e)
 
-conn.close()'''
+conn.close()
