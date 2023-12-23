@@ -25,11 +25,16 @@ data = {
     ]
 }
 
+
 # Crear DataFrame
 df = pd.DataFrame(data)
+print(df)
 
 # Crear tabla de programas
-tabla_programas = {'programa_id': [], 'origen': [], 'destino': []}
+tabla_programas = {'programa_id': [], 
+                   'origen': [], 
+                   'destino': []}
+
 id = 1
 
 for origen in data['Capital']:
