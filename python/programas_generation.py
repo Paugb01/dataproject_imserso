@@ -1,5 +1,5 @@
 import pandas as pd
-
+import psycopg2
 # Para mvp de momento solo programas capitales de provincia
 # Datos de provincias y capitales
 data = {
@@ -50,3 +50,33 @@ df_programas = pd.DataFrame(tabla_programas)
 
 # Mostrar el DataFrame de programas
 print(df_programas)
+
+
+ #CONEXIÓN BBDD
+conn = psycopg2.connect(
+    database="DBImserso", 
+    user='postgres',
+    password="Welcome01", 
+    host='localhost', 
+    port= '5432'
+)
+
+try:
+    cursor = conn.cursor()
+    print("Conexión exitosa a la base de datos.")
+
+    for index, row in tabla_programas.iterrows():
+        cursor.execute(
+            """
+            INSERT INTO usuarios (usuario_id,nombre,apellidos)
+            VALUES (%s, %s, %s)
+            """,
+            (row['programa_id'],row['origen'], row['destino'])  
+        )
+    conn.commit()
+    print("Inserción exitosa en la base de datos.")
+
+except psycopg2.Error as e:
+    print("Error al conectar a la base de datos:", e)
+
+conn.close()
