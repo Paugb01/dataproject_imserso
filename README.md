@@ -78,3 +78,10 @@ Este readme sirve como guía inicial para el desarrollo del proyecto. ¡Éxito e
       -  Todo esto se puede cambiar!
       -  ![Alt text](images/programas_01.png)
       -  ![Alt text](images/usuarios_01.png)
+-  24/12/2023
+   - He ordenado un poco de  la estructura de directorios
+   - He creado el script process_usuarios que:
+     - Lee la tabla usuarios de la BD y crea un dataframe
+     - Añade la columna. 'puntos' al dataframe
+     - Evalua tipo de familia, edad, renta y discapacidad y asigna puntos.
+     - No evalúa si se ha participado anteriormente en el programa ni si hay más solicitudes para este año (post MVP).
