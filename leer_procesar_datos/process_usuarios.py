@@ -1,5 +1,7 @@
 import pandas as pd
+import numpy as np
 import psycopg2
+from sqlalchemy import create_engine
 
 # Database connection parameters
 db_params = {
@@ -108,3 +110,55 @@ df_usuarios_from_db['puntos'] = df_usuarios_from_db.apply(puntuar_familia, axis 
 #    print(df_usuarios_from_db)
 #df_usuarios_from_db.info()
 print(df_usuarios_from_db)
+
+
+#Now we generate petitions
+
+# Database connection URI
+db_uri = 'postgresql+psycopg2://postgres:Welcome01@localhost:5432/postgres'
+
+try:
+    # Connect to the database
+    engine = create_engine(db_uri)
+    
+    # Query to retrieve data from the programas table
+    programas_query = "SELECT programa_id FROM programas"
+    df_programas_from_db = pd.read_sql_query(programas_query, engine)
+
+    # Create the 'solicitudes_df' DataFrame
+    solicitudes_df = pd.DataFrame(columns=['solicitud_id', 'usuario_id', 'programa_id', 'puntuacion'])
+
+    # Generate 500 unique combinations of usuario_id and programa_id
+    for i in range(500):
+        usuario_id = np.random.choice(df_usuarios_from_db['usuario_id'])
+        puntos_usuario = df_usuarios_from_db.loc[df_usuarios_from_db['usuario_id'] == usuario_id, 'puntos'].values[0]
+
+        # Generate unique programa_id for each usuario_id
+        programa_id_options = np.setdiff1d(df_programas_from_db['programa_id'].values, solicitudes_df.loc[solicitudes_df['usuario_id'] == usuario_id, 'programa_id'].values)
+        
+        # Check if programa_id_options is empty
+        if len(programa_id_options) == 0:
+            continue
+
+        programa_id = np.random.choice(programa_id_options)
+
+        solicitudes_df = pd.concat([solicitudes_df, pd.DataFrame({
+            'solicitud_id': [i + 1],
+            'usuario_id': [usuario_id],
+            'programa_id': [programa_id],
+            'puntuacion': [puntos_usuario]
+        })], ignore_index=True)
+
+    # Print the 'solicitudes_df' DataFrame for verification
+    print(solicitudes_df) 
+
+    # Insert the 'solicitudes_df' DataFrame into the 'solicitudes' table in the database
+    solicitudes_df.to_sql('solicitudes', engine, index=False, if_exists='append', method='multi', chunksize=1000)
+
+except Exception as e:
+    print("Error executing SQL query:", e)
+
+finally:
+    # Close the database connection
+    engine.dispose()
+

@@ -79,9 +79,18 @@ Este readme sirve como guía inicial para el desarrollo del proyecto. ¡Éxito e
       -  ![Alt text](images/programas_01.png)
       -  ![Alt text](images/usuarios_01.png)
 -  24/12/2023
-   - He ordenado un poco de  la estructura de directorios
-   - He creado el script process_usuarios que:
-     - Lee la tabla usuarios de la BD y crea un dataframe
-     - Añade la columna. 'puntos' al dataframe
-     - Evalua tipo de familia, edad, renta y discapacidad y asigna puntos.
-     - No evalúa si se ha participado anteriormente en el programa ni si hay más solicitudes para este año (post MVP).
+   - jumepe: 
+     - He ordenado un poco de  la estructura de directorios
+     - He creado el script process_usuarios que:
+       - Lee la tabla usuarios de la BD y crea un dataframe
+       - Añade la columna. 'puntos' al dataframe
+       - Evalua tipo de familia, edad, renta y discapacidad y asigna puntos.
+       - No evalúa si se ha participado anteriormente en el programa ni si hay más solicitudes para este año (post MVP).
+   - Hugo: 
+     - crea directorio BBDD y copia archivos necesarios para dockerfile.
+   - jumepe: 
+     - Pequeña modificaciónd e sql/sql_jmp.sql para añadir la columna puntuacion (mucho problema por tema fkeys al insertar, así va) y cambiar solicitudes_id a solicitud_id
+     - He añadido código para generar solicitudes mediante la combinación de usuario_id y programa_id
+       - Un usuario_id puede combinar con más de un programa_id, pero no dos veces el mismo.
+       - Por cada solicitud, hay una puntuación correspondiente al usuario. Esto en verdad se podría haber hecho con algún query supongo, pero creo que en la tabla será más fácil evaluar las solicitudes. Lo podemos cambiar en el futuro.
+       - 
