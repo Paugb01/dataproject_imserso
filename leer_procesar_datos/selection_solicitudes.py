@@ -1,5 +1,6 @@
 import pandas as pd
 from sqlalchemy import create_engine, text
+import psycopg2
 
 # Assuming you already have a SQLAlchemy engine
 db_uri = 'postgresql+psycopg2://postgres:Welcome01@localhost:5432/postgres'
@@ -62,21 +63,37 @@ df_asignado.to_sql('plazas_asignadas', engine, if_exists='replace', index=True, 
 df_lista_espera.reset_index(drop=True, inplace=True)
 df_lista_espera.to_sql('lista_espera', engine, if_exists='replace', index=True, index_label='espera_id')
 
+# Database connection parameters
+db_params = {
+    'host': 'localhost',
+    'port': 5432,
+    'user': 'postgres',
+    'password': 'Welcome01',
+    'database': 'postgres',  # Replace with your actual database name
+}
+
+# Connect to PostgreSQL database
+connection = psycopg2.connect(**db_params)
+cursor = connection.cursor()
+
 # SQL queries to set primary keys
-alter_query_asignadas = f"""
+alter_query_asignadas = """
     ALTER TABLE plazas_asignadas
     ADD PRIMARY KEY (asignadas_id);
 """
 
-alter_query_espera = f"""
+alter_query_espera = """
     ALTER TABLE lista_espera
     ADD PRIMARY KEY (espera_id);
 """
 
-# Set primary keys using text construct
-with engine.connect() as connection:
-    connection.execute(text(alter_query_asignadas))
-    connection.execute(text(alter_query_espera))
+# Execute SQL queries
+cursor.execute(alter_query_asignadas)
+cursor.execute(alter_query_espera)
+
+# Commit and close the connection
+connection.commit()
+connection.close()
 
 # Display the count of selected entries in df_asignado and df_lista_espera
 print("\nCount of selected entries in df_asignado:", len(df_asignado))

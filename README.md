@@ -104,3 +104,5 @@ Este readme sirve como guía inicial para el desarrollo del proyecto. ¡Éxito e
        - PROBLEMA A RESOLVER: no es crítico, pero no he conseguido que establezca asignadas_id y espera_id como primary keys...lo miraremos más tarde.
        - ![Alt text](images/plazas_asignadas_01.png)
        - ![Alt text](images/lista_espera_01.png)
+       - RESUELTO problema estableciendo asignadas_id y espera_id como primary keys:
+         - El problema debe de estar relacionado con cómo sqlalchemy ejecuta el código SQL. Sin embargo, sqlalchemy es necesario para realizar las operaciones con Pandas, así que al final del código vuelvo a conectar a la BD con psycopg2 y el código SQL pasa correctamente.
