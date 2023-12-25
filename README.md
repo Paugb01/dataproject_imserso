@@ -106,3 +106,5 @@ Este readme sirve como guía inicial para el desarrollo del proyecto. ¡Éxito e
        - ![Alt text](images/lista_espera_01.png)
        - RESUELTO problema estableciendo asignadas_id y espera_id como primary keys:
          - El problema debe de estar relacionado con cómo sqlalchemy ejecuta el código SQL. Sin embargo, sqlalchemy es necesario para realizar las operaciones con Pandas, así que al final del código vuelvo a conectar a la BD con psycopg2 y el código SQL pasa correctamente.
+       - Añadida solicitud_id como foreign keys a lista_espera y plazas_asignadas. Ahora todas las tablas están interconectadas a través de la tabla solicitudes.
+       - ![Alt text](images/irdiagram_01.png)

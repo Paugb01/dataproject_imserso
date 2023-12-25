@@ -76,15 +76,17 @@ db_params = {
 connection = psycopg2.connect(**db_params)
 cursor = connection.cursor()
 
-# SQL queries to set primary keys
+# SQL queries to set primary keys and foreign keys
 alter_query_asignadas = """
     ALTER TABLE plazas_asignadas
-    ADD PRIMARY KEY (asignadas_id);
+    ADD PRIMARY KEY (asignadas_id),
+    ADD FOREIGN KEY (solicitud_id) REFERENCES solicitudes(solicitud_id);
 """
 
 alter_query_espera = """
     ALTER TABLE lista_espera
-    ADD PRIMARY KEY (espera_id);
+    ADD PRIMARY KEY (espera_id),
+    ADD FOREIGN KEY (solicitud_id) REFERENCES solicitudes(solicitud_id);
 """
 
 # Execute SQL queries
