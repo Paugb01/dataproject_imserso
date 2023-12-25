@@ -89,8 +89,18 @@ Este readme sirve como guía inicial para el desarrollo del proyecto. ¡Éxito e
    - Hugo: 
      - crea directorio BBDD y copia archivos necesarios para dockerfile.
    - jumepe: 
-     - Pequeña modificaciónd e sql/sql_jmp.sql para añadir la columna puntuacion (mucho problema por tema fkeys al insertar, así va) y cambiar solicitudes_id a solicitud_id
+     - Pequeña modificación de sql/sql_jmp.sql para añadir la columna puntuacion (mucho problema por tema fkeys al insertar, así va) y cambiar solicitudes_id a solicitud_id
      - He añadido código para generar solicitudes mediante la combinación de usuario_id y programa_id
        - Un usuario_id puede combinar con más de un programa_id, pero no dos veces el mismo.
        - Por cada solicitud, hay una puntuación correspondiente al usuario. Esto en verdad se podría haber hecho con algún query supongo, pero creo que en la tabla será más fácil evaluar las solicitudes. Lo podemos cambiar en el futuro.
-       - 
+       - ![Alt text](images/solicitudes_01.png)
+   - 25/12/2023:
+     - jumepe: creado código selection_solicitudes.py que evalúa las solicitudes por puntuación, para cada programa_id:
+       - Va por cada solicitud para cada programa_id y rankea las solicitudes por puntos.
+       - Lee de la tabla programas las plazas que tiene cada programa_id
+       - La más alta la mete en un dataframe llamado 'plazas_asignadas' SI quedan plazas
+       - Pasa a la siguiente y hace lo mismo, pero si no quedan plazas lo mete en un dataframe 'espera'
+       - Cuando ya ha evaluado todo, sube estos dataframes a la base de datos en dos tablas.
+       - PROBLEMA A RESOLVER: no es crítico, pero no he conseguido que establezca asignadas_id y espera_id como primary keys...lo miraremos más tarde.
+       - ![Alt text](images/plazas_asignadas_01.png)
+       - ![Alt text](images/lista_espera_01.png)
