@@ -65,3 +65,46 @@ Este readme sirve como guía inicial para el desarrollo del proyecto. ¡Éxito e
    - Inyectar datos en la tabla solicitudes:
      - Hacer combinaciones de usuario_id y programa_id (que no se repitan, es decir un mismo usuario no puede solicitar lo mismo dos veces)
      - Como idea: cada usuario pida todos los programas una vez, en esta MVP serían 100 usuarios * 6 programas (3 regiones, 2 programas por región) = 600 solicitudes, ¿no?
+
+-  23/12/2023
+   -  jumepe: he creado un fichero imserso_jmp.sql nuevo que cambia usuario_id a string y le mete el random de NIF del fichero de generación e inserción de datos gen_datos_simple.py
+   -  He cambiado el fichero de generacion e inserción de datos gen_datos_simple.py
+   -  He creado un fichero de generación e inserción de datos a la tabla programas gen_datos_programas.py que hace:
+      -  Genera 10 programas
+      -  programa_id int correlativo de 1-10
+      -  nombre_programa con la sintaxis origen - destino
+      -  fecha_salida y fecha_vuelta limitado a meses de invierno y fecha_vuelta es posterior a fecha_salida
+      -  destino es aleatorio entre tres opciones: Costa insular, Costa peninsular e interior
+      -  Todo esto se puede cambiar!
+      -  ![Alt text](images/programas_01.png)
+      -  ![Alt text](images/usuarios_01.png)
+-  24/12/2023
+   - jumepe: 
+     - He ordenado un poco de  la estructura de directorios
+     - He creado el script process_usuarios que:
+       - Lee la tabla usuarios de la BD y crea un dataframe
+       - Añade la columna. 'puntos' al dataframe
+       - Evalua tipo de familia, edad, renta y discapacidad y asigna puntos.
+       - No evalúa si se ha participado anteriormente en el programa ni si hay más solicitudes para este año (post MVP).
+   - Hugo: 
+     - crea directorio BBDD y copia archivos necesarios para dockerfile.
+   - jumepe: 
+     - Pequeña modificación de sql/sql_jmp.sql para añadir la columna puntuacion (mucho problema por tema fkeys al insertar, así va) y cambiar solicitudes_id a solicitud_id
+     - He añadido código para generar solicitudes mediante la combinación de usuario_id y programa_id
+       - Un usuario_id puede combinar con más de un programa_id, pero no dos veces el mismo.
+       - Por cada solicitud, hay una puntuación correspondiente al usuario. Esto en verdad se podría haber hecho con algún query supongo, pero creo que en la tabla será más fácil evaluar las solicitudes. Lo podemos cambiar en el futuro.
+       - ![Alt text](images/solicitudes_01.png)
+   - 25/12/2023:
+     - jumepe: creado código selection_solicitudes.py que evalúa las solicitudes por puntuación, para cada programa_id:
+       - Va por cada solicitud para cada programa_id y rankea las solicitudes por puntos.
+       - Lee de la tabla programas las plazas que tiene cada programa_id
+       - La más alta la mete en un dataframe llamado 'plazas_asignadas' SI quedan plazas
+       - Pasa a la siguiente y hace lo mismo, pero si no quedan plazas lo mete en un dataframe 'espera'
+       - Cuando ya ha evaluado todo, sube estos dataframes a la base de datos en dos tablas.
+       - PROBLEMA A RESOLVER: no es crítico, pero no he conseguido que establezca asignadas_id y espera_id como primary keys...lo miraremos más tarde.
+       - ![Alt text](images/plazas_asignadas_01.png)
+       - ![Alt text](images/lista_espera_01.png)
+       - RESUELTO problema estableciendo asignadas_id y espera_id como primary keys:
+         - El problema debe de estar relacionado con cómo sqlalchemy ejecuta el código SQL. Sin embargo, sqlalchemy es necesario para realizar las operaciones con Pandas, así que al final del código vuelvo a conectar a la BD con psycopg2 y el código SQL pasa correctamente.
+       - Añadida solicitud_id como foreign keys a lista_espera y plazas_asignadas. Ahora todas las tablas están interconectadas a través de la tabla solicitudes.
+       - ![Alt text](images/irdiagram_01.png)
