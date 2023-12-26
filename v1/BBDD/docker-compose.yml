@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+
+  postgres:
+    container_name: postgres_containerimserso
+    image: postgres:latest
+    restart: always    
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Welcome01
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:     
+      - ./imserso_jmp.sql:/docker-entrypoint-initdb.d/imserso_jmp.sql
+
+  python_bdd_imserso:
+      container_name: python
+      build:
+        context: .
+        dockerfile: Dockerfile
+      depends_on:
+        - postgres  
+ 
+      
+      
