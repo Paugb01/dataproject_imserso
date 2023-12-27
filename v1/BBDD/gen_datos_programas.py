@@ -62,19 +62,7 @@ def generar_datos_fake_programas(cantidad):
         programas.append([j, nombre_programa, plazas, origen, destino.capitalize(), fecha_salida, fecha_vuelta])
 
     return programas
-
-def generar_destino(tipo_turismo):
-    if tipo_turismo == 'interior':
-        destinos = ['Andalucía', 'Aragón', 'Canarias', 'Baleares', 'Asturias', 'Cantabria', 'Castilla y León', 'Castilla-La Mancha', 'Cataluña', 'Comunitat Valenciana', 'Extremadura', 'Galicia', 'Madrid', 'Comunidad de Murcia', 'Región de Navarra', 'Comunidad Foral de País Vasco', 'La Rioja', 'Ceuta', 'Melilla']
-    elif tipo_turismo == 'costa peninsular':
-        destinos = ['Andalucía', 'Cataluña', 'Comunidad Valenciana', 'Murcia']
-    elif tipo_turismo == 'costa insular':
-        destinos = ['Baleares', 'Canarias']
-    else:
-        destinos = []
     
-
-
 # Generate fake data for programas
 cantidad_programas = 10  # Specify the number of rows you want
 programas = generar_datos_fake_programas(cantidad_programas)
