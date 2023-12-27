@@ -17,13 +17,13 @@ RUN pip install -r requirements.txt
 
 # Copiando los scripts 
 
-COPY gen_datos_simple.py .
+COPY gen_datos_v1.py .
 COPY gen_datos_programas.py .
 COPY process_usuarios.py .
 
 # Ejecutando scripts 
 
-CMD [ "bash", "-c", "python gen_datos_simple.py && python gen_datos_programas.py && python process_usuarios.py" ]
+CMD [ "bash", "-c", "python gen_datos_v1.py && python gen_datos_programas.py && python process_usuarios.py" ]
 
 
 
