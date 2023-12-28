@@ -15,33 +15,62 @@ def generar_datos_fake_programas(cantidad):
     programas = []
 
     for j in range(1, cantidad + 1):
-        destino = random.choice(['costa insular', 'costa peninsular', 'interior'])
-        nombre_programa = f'{faker.city()} - {destino.capitalize()}'  # Updated logic for nombre_programa
+        tipo_turismo = random.choice(['costa insular', 'costa peninsular', 'interior'])
+        
+        if tipo_turismo == 'interior':
+            destinos = ['Andalucía', 'Aragón', 'Canarias', 'Baleares', 'Asturias', 'Cantabria', 'Castilla y León', 'Castilla-La Mancha', 'Cataluña', 'Comunitat Valenciana', 'Extremadura', 'Galicia', 'Madrid', 'Comunidad de Murcia', 'Región de Navarra', 'Comunidad Foral de País Vasco', 'La Rioja', 'Ceuta', 'Melilla']
+        elif tipo_turismo == 'costa peninsular':
+            destinos = ['Andalucía', 'Cataluña', 'Comunidad Valenciana', 'Murcia']
+        elif tipo_turismo == 'costa insular':
+            destinos = ['Baleares', 'Canarias']
+        else:
+            destinos = []
+        
+        destino = random.choice(destinos)
+        nombre_programa = f'{tipo_turismo.capitalize()} - {destino.capitalize()}'
         plazas = random.randint(20, 50)
         origen = faker.city()
 
-        # Generate winter dates for fecha_salida and fecha_vuelta
-        fecha_salida = faker.date_between_dates(
-            date_start=datetime.date(2023, 12, 1),
-            date_end=datetime.date(2024, 2, 29)
-        )
-        fecha_vuelta = faker.date_between_dates(
-            date_start=fecha_salida,
-            date_end=datetime.date(2024, 2, 29)
-        )
+        if tipo_turismo == 'interior':
+            fecha_salida = faker.date_between_dates(
+                date_start=datetime.date(2023, 12, 1),
+                date_end=datetime.date(2024, 2, 29)
+            )
+            fecha_vuelta = faker.date_between_dates(
+                date_start=fecha_salida,
+                date_end=datetime.date(2024, 2, 29)
+            )
+        elif tipo_turismo == 'costa peninsular':
+            fecha_salida = faker.date_between_dates(
+                date_start=datetime.date(2023, 12, 1),
+                date_end=datetime.date(2024, 2, 29)
+            )
+            fecha_vuelta = faker.date_between_dates(
+                date_start=fecha_salida,
+                date_end=datetime.date(2024, 2, 29)
+            )
+        elif tipo_turismo == 'costa insular':
+            fecha_salida = faker.date_between_dates(
+                date_start=datetime.date(2023, 12, 1),
+                date_end=datetime.date(2024, 2, 29)
+            )
+            fecha_vuelta = faker.date_between_dates(
+                date_start=fecha_salida,
+                date_end=datetime.date(2024, 2, 29)
+            )
 
-        programas.append([j, nombre_programa, plazas, origen, destino.capitalize(), fecha_salida, fecha_vuelta])
+        programas.append([j, nombre_programa,tipo_turismo, plazas, origen, destino.capitalize(), fecha_salida, fecha_vuelta])
 
     return programas
-
-
+    
 # Generate fake data for programas
 cantidad_programas = 10  # Specify the number of rows you want
 programas = generar_datos_fake_programas(cantidad_programas)
 
 # DATAFRAME PRINCIPAL
-df_programas = pd.DataFrame(programas, columns=['programa_id', 'nombre_programa', 'plazas', 'origen', 'destino', 'fecha_salida', 'fecha_vuelta'])
+df_programas = pd.DataFrame(programas, columns=['programa_id','nombre_programa','tipo_turismo', 'plazas', 'origen', 'destino', 'fecha_salida', 'fecha_vuelta'])
 print(df_programas)
+
 
 # CONEXIÓN BBDD
 conn = psycopg2.connect(

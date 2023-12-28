@@ -93,6 +93,49 @@ df_usuarios_from_db['puntos'] = df_usuarios_from_db.apply(puntuar_renta, axis = 
 
 print(df_usuarios_from_db)
 
+
+#Function to evaluate the health status of users in usuarios:
+def puntuar_condicion_medica(row):
+    if row['condicion_medica'] == True:
+        return row['puntos'] + 20
+    else:
+        return row['puntos'] + 0
+    
+#Pass puntuar_condicion_medica function to the df:
+df_usuarios_from_db['puntos'] = df_usuarios_from_db.apply(puntuar_condicion_medica, axis = 1)
+
+
+#Function to evaluate assess widowhood of users in usuarios:
+def puntuar_viudez(row):
+    if row['viudedad'] == 1:
+        return row['puntos'] + 10
+    else:
+        return row['puntos'] + 0
+    
+#Pass puntuar_viudez function to the df:
+df_usuarios_from_db['puntos'] = df_usuarios_from_db.apply(puntuar_viudez, axis = 1)
+
+
+#Function to evaluate participation in previous years of users in usuarios:
+def puntuar_participacion_previa(row):
+    if row['participacion21_22'] == False and row['participacion22_23'] == False:
+        if row['viajes_realizados_22_23'] == 1:
+            return row['puntos'] + 100
+        else:
+            return row['puntos'] + 50
+    elif row['participacion21_22'] == True and row['participacion22_23'] == False:
+        return row['puntos'] + 40
+    elif row['participacion21_22'] == False and row['participacion22_23'] == True:
+        return row['puntos'] + 20
+    elif row['participacion21_22'] == True and row['participacion22_23'] == True:
+        if row['viajes_realizados_21_22'] == 3 or row['viajes_realizados_22_23'] == 3:
+            return row['puntos'] + 0
+        else:
+            return row['puntos'] + 10   
+
+#Pass puntuar_participacio_previa function to the df:
+df_usuarios_from_db['puntos'] = df_usuarios_from_db.apply(puntuar_participacion_previa, axis = 1)
+
 #Function to evaluate the type of family of each of the users in usuarios:
 def puntuar_familia(row):
     if row['tipo_familia'] == 2:
@@ -105,7 +148,17 @@ def puntuar_familia(row):
 #Pass puntuar_familia function to the df:
 df_usuarios_from_db['puntos'] = df_usuarios_from_db.apply(puntuar_familia, axis = 1)
 
-
+#Function to evaluate the criminal record of the users in usuarios:
+def puntuar_antecedentes(row):
+    if row['antecedentes'] == 0:
+        return row['puntos'] 
+    elif row['antecedentes'] == 1:
+        return row['puntos'] - 5
+    else:
+        return row['puntos'] -10
+    
+#Pass puntuar_antecedentes function to the df:
+df_usuarios_from_db['puntos'] = df_usuarios_from_db.apply(puntuar_antecedentes, axis = 1)
 #with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
 #    print(df_usuarios_from_db)
 #df_usuarios_from_db.info()
