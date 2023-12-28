@@ -37,7 +37,7 @@ def generar_datos_fake(cantidad):
         fecha_nacimiento = faker.date_of_birth(minimum_age=55, maximum_age=110)
         edad = hoy.year - fecha_nacimiento.year - ((hoy.month, hoy.day) < (fecha_nacimiento.month, fecha_nacimiento.day))
         discapacidad = np.random.choice(tipo_discapacidad, p=(0.57, 0.36, 0.07), size=1)[0]
-        renta = random.uniform(484.61,3175)
+        renta = np.random.normal(1.829,800)
         enfermedad = np.random.choice([True, False], p=(0.083, 0.917), size=1)[0]
         viudedad = np.random.choice(viud, p=(0.707, 0.293), size=1)[0]
         pa21_22 = random.choice([True, False]) # Participación año 21-22
