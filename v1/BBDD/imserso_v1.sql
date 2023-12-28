@@ -62,10 +62,14 @@ CREATE TABLE public.programas (
 -- );
 
 CREATE TABLE public.solicitudes (
-    solicitudes_id int4 NOT NULL, 
+    solicitud_id int4 NOT NULL, 
     usuario_id varchar(50) NOT NULL,
     programa_id int4 NULL,
-    CONSTRAINT solicitudes_pkey PRIMARY KEY (solicitudes_id),
+    puntuacion int4 null,
+    CONSTRAINT solicitud_pkey PRIMARY KEY (solicitud_id),
     CONSTRAINT solicitudes_usuario_id_fkey FOREIGN KEY (usuario_id) REFERENCES public.usuarios (usuario_id),
     CONSTRAINT solicitudes_programa_id_fkey FOREIGN KEY (programa_id) REFERENCES public.programas (programa_id)
 );
+
+
+
