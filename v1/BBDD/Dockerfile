@@ -26,12 +26,3 @@ COPY selection_solicitudes.py .
 # Ejecutando scripts 
 
 CMD [ "bash", "-c", "python gen_datos_simple.py && python gen_datos_programas.py && python process_usuarios.py && python selection_solicitudes.py" ]
-
-
-
-
-
-
-
-
-
