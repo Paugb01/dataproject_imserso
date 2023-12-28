@@ -19,8 +19,10 @@ def generar_datos_fake(cantidad):
     hoy = datetime.date(2023,12,22)
     tp_familia = [0,1,2] # Tipos de familias: 0 familias no numerosa, 1 numerosa general 2 numerosas especial
     tipo_discapacidad = [0,1,2] # Tipos discapacidad: 0 - No presentan discapacidad o es leve (0% < x < 32%) , 1 - Entre 33% < x < 49% , 2 - Mayor al 50%
-    prob_viajes21_22 =[1,2] # Viajes realizados: 1: 1 viaje 2: 2 viajes o mas
-    prob_viajes22_23 =[1,2] # Viajes realizados: 1: 1 viaje 2: 2 viajes o mas
+    prob_viajes21_22 =[2,3] # Viajes realizados: 2: 1 viaje 3: 2 viajes o mas
+    prob_viajes22_23 =[2,3] # Viajes realizados: 2: 1 viaje 3: 2 viajes o mas
+    esper_viajes21_22 = [0,1] # 0:No realizo viajes , 1 :Quedo en lista de espera
+    espera_viajes22_23 = [0,1] # 0:No realizo viajes , 1 :Quedo en lista de espera
     viud = [0,1] # 0 = no ser viudo, 1 = viudo
     tipo_antecedentes = [0,1,2] # Tipo antecedentes: 0 - No tiene antecedentes  , 1 Leves, 2 Graves
     Faker.seed(1000)
@@ -42,12 +44,12 @@ def generar_datos_fake(cantidad):
         if pa21_22 is True:
             viajes_21_22 = np.random.choice(prob_viajes21_22, p=(0.70, 0.30), size=1)[0]
         else:
-            viajes_21_22 = 0
+            viajes_21_22 = np.random.choice(esper_viajes21_22, p=(0.70, 0.30), size=1)[0]
         pa22_23 = random.choice([True, False]) # Participación año 22-23
         if pa22_23 is True:
             viajes_22_23 = np.random.choice(prob_viajes22_23, p=(0.70, 0.30), size=1)[0]
         else:
-            viajes_22_23 = 0
+            viajes_22_23 = np.random.choice(espera_viajes22_23, p=(0.70, 0.30), size=1)[0]
         tipo_familia = np.random.choice(tp_familia, p=(0.75, 0.20, 0.05), size=1)[0] #Selecciona un valor según el tipo de familia
         antecedentes = np.random.choice(tipo_antecedentes, p=(0.84, 0.10, 0.06), size=1)[0]
         jubilados.append([nombre,apellido,nif,fecha_nacimiento,edad,discapacidad,renta,enfermedad,viudedad,pa21_22,viajes_21_22,pa22_23,viajes_22_23,tipo_familia,antecedentes]) 
@@ -81,7 +83,7 @@ try:
     for index, row in df_usuarios.iterrows():
         cursor.execute(
             """
-            INSERT INTO usuarios (usuario_id,nombre,apellidos, edad, fecha_nacimiento, renta, tipo_discapacidad, tipo_familia, condicion_medica,viudedad,antecedentes participacion21_22, viajes_realizados_21_22, participacion21_23, viajes_realizados_22_23,)
+            INSERT INTO usuarios (usuario_id,nombre,apellidos, edad, fecha_nacimiento, renta, tipo_discapacidad, tipo_familia, condicion_medica, viudedad, antecedentes, participacion21_22, viajes_realizados_21_22, participacion22_23, viajes_realizados_22_23)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """,
             (row['nif'],row['nombre'], row['apellido'], row['edad'], row['fecha_nacimiento'], row['renta'], row['discapacidad'], row['tipo_familia'], row['enfermedad'],row['viudedad'],row['antecedentes'], row['pa21_22'], row['viajes_21_22'], row['pa22_23'],row['viajes_22_23'])  

@@ -27,7 +27,7 @@ def generar_datos_fake_programas(cantidad):
             destinos = []
         
         destino = random.choice(destinos)
-        nombre_programa = f'{faker.city()} - {destino.capitalize()}'
+        nombre_programa = f'{tipo_turismo.capitalize()} - {destino.capitalize()}'
         plazas = random.randint(20, 50)
         origen = faker.city()
 
@@ -59,7 +59,7 @@ def generar_datos_fake_programas(cantidad):
                 date_end=datetime.date(2024, 2, 29)
             )
 
-        programas.append([j, nombre_programa, plazas, origen, destino.capitalize(), fecha_salida, fecha_vuelta])
+        programas.append([j, nombre_programa,tipo_turismo, plazas, origen, destino.capitalize(), fecha_salida, fecha_vuelta])
 
     return programas
     
@@ -68,7 +68,7 @@ cantidad_programas = 10  # Specify the number of rows you want
 programas = generar_datos_fake_programas(cantidad_programas)
 
 # DATAFRAME PRINCIPAL
-df_programas = pd.DataFrame(programas, columns=['programa_id', 'nombre_programa', 'plazas', 'origen', 'destino', 'fecha_salida', 'fecha_vuelta'])
+df_programas = pd.DataFrame(programas, columns=['programa_id','nombre_programa','tipo_turismo', 'plazas', 'origen', 'destino', 'fecha_salida', 'fecha_vuelta'])
 print(df_programas)
 
 

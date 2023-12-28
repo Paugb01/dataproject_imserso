@@ -12,12 +12,12 @@ CREATE TABLE public.usuarios (
     renta int4 NULL, 
     tipo_discapacidad int4 NULL, 
     tipo_familia int4 NULL,
-    condicion_medica int4 NULL,
+    condicion_medica BOOLEAN,
     viudedad int4 NULL,
     antecedentes int4 NULL,
     participacion21_22 BOOLEAN, 
     viajes_realizados_21_22 int4 NULL, 
-    participacion21_23 BOOLEAN, 
+    participacion22_23 BOOLEAN, 
     viajes_realizados_22_23 int4 NULL,
     CONSTRAINT usuarios_pkey PRIMARY KEY (usuario_id)
 );
