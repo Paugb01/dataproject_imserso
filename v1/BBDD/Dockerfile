@@ -1,4 +1,4 @@
-# Imagen de Python 3.9
+ # Imagen de Python 3.9
 FROM python:3.12
 
 # Creando directorio de trabajo
@@ -25,11 +25,7 @@ COPY selection_solicitudes.py .
 
 # Ejecutando scripts 
 
-<<<<<<< HEAD
-CMD [ "bash", "-c", "python gen_datos_v1.py && python gen_datos_programas.py && python process_usuarios.py" ]
-=======
 CMD [ "bash", "-c", "python gen_datos_simple.py && python gen_datos_programas.py && python process_usuarios.py && python selection_solicitudes.py" ]
->>>>>>> 14ba914de98721320f32513733bc6f2fc7080ca1
 
 
 
