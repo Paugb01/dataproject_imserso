@@ -3,3 +3,4 @@ pandas
 datetime
 numpy
 psycopg2
+sqlalchemy
