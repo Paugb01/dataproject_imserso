@@ -21,20 +21,34 @@ def generar_datos_fake(cantidad):
     tipo_discapacidad = [0,1,2] # Tipos discapacidad: 0 no presentan discapacidad o es leve, 1 entre 33<x<49 , 2 x>50
     Faker.seed(1000)
     random.seed(1000)
-    np.random.seed(1000)
+    np.random.seed(4)
     jubilados = []
     for j in range(cantidad):
         nombre = unicodedata.normalize('NFKD', faker.first_name()).encode('ascii', 'ignore').decode('utf-8')
         apellido = unicodedata.normalize('NFKD', faker.last_name()).encode('ascii', 'ignore').decode('utf-8')
         nif = faker.nif()
-        fecha_nacimiento = faker.date_of_birth(minimum_age=55, maximum_age=110)
-        edad = hoy.year - fecha_nacimiento.year - ((hoy.month, hoy.day) < (fecha_nacimiento.month, fecha_nacimiento.day))
+        beta_values = np.random.beta(2, 5)
+        edad = beta_values * (110 - 55) + 55 # Distribuye edad
+        year_nacimiento = 2023 - round(edad)
+        start = datetime.date(year_nacimiento,1,1)
+        end = datetime.date(year_nacimiento,12,31)
+        fecha_nacimiento = faker.date_between_dates(date_start=start, date_end=end) # Calcula fecha nacimiento 
         discapacidad = np.random.choice(tipo_discapacidad, p=(0.75, 0.20, 0.05), size=1)[0]
-        renta = random.uniform(484.61,3175)
+        renta = np.random.pareto(3, size=None) * 1400 + 500 
         tipo_familia = np.random.choice(tp_familia, p=(0.75, 0.20, 0.05), size=1)[0] #Selecciona un valor según el tipo de familia
-        jubilados.append([nombre,apellido,nif,fecha_nacimiento,edad,discapacidad,renta,tipo_familia]) 
-    return jubilados 
-
+        jubilados.append([nombre,apellido,nif,fecha_nacimiento,edad,discapacidad,renta,tipo_familia])
+    return jubilados
+ 
+jubilados = generar_datos_fake(10000)
+ 
+ 
+#DATAFRAME PRINCIPAL
+df = pd.DataFrame(jubilados,columns =['nombre','apellido','nif','fecha_nacimiento','edad','discapacidad','renta','tipo_familia'])
+print(df)
+ 
+ 
+#DATADRAMEs SECUNDARIOS
+df_usuarios = df[['nombre','apellido','nif','fecha_nacimiento','edad','discapacidad','renta','tipo_familia']]
 jubilados = generar_datos_fake(100) 
 
 
