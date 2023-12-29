@@ -8,7 +8,7 @@ db_params = {
     'database': 'postgres',
     'user': 'postgres',
     'password': 'Welcome01',
-    'host': 'postgres',
+    'host': 'localhost',
     'port': '5432'
 }
 
@@ -119,6 +119,10 @@ df_usuarios_from_db['puntos'] = df_usuarios_from_db.apply(puntuar_viudez, axis =
 #Function to evaluate participation in previous years of users in usuarios:
 def puntuar_participacion_previa(row):
     if row['participacion21_22'] == False and row['participacion22_23'] == False:
+        '''
+        This IF ELSE loop assigns points to those who didn't participate in the past two years because
+        they 1)didn't/want or couldn't participate OR 2)because they weren't awarded a place.
+        '''
         if row['viajes_realizados_22_23'] == 1:
             return row['puntos'] + 100
         else:
@@ -168,7 +172,7 @@ print(df_usuarios_from_db)
 #Now we generate petitions
 
 # Database connection URI
-db_uri = 'postgresql+psycopg2://postgres:Welcome01@postgres:5432/postgres'
+db_uri = 'postgresql+psycopg2://postgres:Welcome01@localhost:5432/postgres'
 
 try:
     # Connect to the database

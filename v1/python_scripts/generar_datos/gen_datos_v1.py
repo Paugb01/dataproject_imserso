@@ -21,7 +21,7 @@ def generar_datos_fake(cantidad):
     tipo_discapacidad = [0,1,2] # Tipos discapacidad: 0 - No presentan discapacidad o es leve (0% < x < 32%) , 1 - Entre 33% < x < 49% , 2 - Mayor al 50%
     prob_viajes21_22 =[2,3] # Viajes realizados: 2: 1 viaje 3: 2 viajes o mas
     prob_viajes22_23 =[2,3] # Viajes realizados: 2: 1 viaje 3: 2 viajes o mas
-    esper_viajes21_22 = [0,1] # 0:No realizo viajes , 1 :Quedo en lista de espera
+    espera_viajes21_22 = [0,1] # 0:No realizo viajes , 1 :Quedo en lista de espera
     espera_viajes22_23 = [0,1] # 0:No realizo viajes , 1 :Quedo en lista de espera
     viud = [0,1] # 0 = no ser viudo, 1 = viudo
     tipo_antecedentes = [0,1,2] # Tipo antecedentes: 0 - No tiene antecedentes  , 1 Leves, 2 Graves
@@ -44,7 +44,7 @@ def generar_datos_fake(cantidad):
         if pa21_22 is True:
             viajes_21_22 = np.random.choice(prob_viajes21_22, p=(0.70, 0.30), size=1)[0]
         else:
-            viajes_21_22 = np.random.choice(esper_viajes21_22, p=(0.70, 0.30), size=1)[0]
+            viajes_21_22 = np.random.choice(espera_viajes21_22, p=(0.70, 0.30), size=1)[0]
         pa22_23 = random.choice([True, False]) # Participación año 22-23
         if pa22_23 is True:
             viajes_22_23 = np.random.choice(prob_viajes22_23, p=(0.70, 0.30), size=1)[0]
@@ -72,7 +72,7 @@ conn = psycopg2.connect(
     database="postgres", 
     user='postgres',
     password="Welcome01", 
-    host='postgres', 
+    host='localhost', 
     port= '5432'
 )
 
