@@ -108,3 +108,17 @@ Este readme sirve como guía inicial para el desarrollo del proyecto. ¡Éxito e
          - El problema debe de estar relacionado con cómo sqlalchemy ejecuta el código SQL. Sin embargo, sqlalchemy es necesario para realizar las operaciones con Pandas, así que al final del código vuelvo a conectar a la BD con psycopg2 y el código SQL pasa correctamente.
        - Añadida solicitud_id como foreign keys a lista_espera y plazas_asignadas. Ahora todas las tablas están interconectadas a través de la tabla solicitudes.
        - ![Alt text](images/irdiagram_01.png)
+- 28/12/2023:
+     - tumup: 
+       - Se añaden los criterios viudedad, participación años anteriores, enfermedad y antecedentes a la tabla gen_datos_v1
+       - Se modifica docker y conexión a BBDD en función de los nuevos nombres de los ficheros
+       - Se asignan porcentajes mas reales, contrastados con estudios, para las variables enfermedad, viudedad y discapacidad.
+       - Se añade lógica para generar usuarios que quedaran en lista de espera en la temporada anterior.
+       - Se modifica fichero sql para que la nueva base levante con todos los campos necesarios
+       - Se añade lógica en el fichero gen_datos_programas para que los destinos generados sean los destinos reales del imserso
+       - Se crean funciones en fichero process_usuario para puntuar los nuevos criterios
+       - 
+       - 
+       - 
+       - 
+       - 
