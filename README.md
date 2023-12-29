@@ -108,3 +108,10 @@ Este readme sirve como guía inicial para el desarrollo del proyecto. ¡Éxito e
          - El problema debe de estar relacionado con cómo sqlalchemy ejecuta el código SQL. Sin embargo, sqlalchemy es necesario para realizar las operaciones con Pandas, así que al final del código vuelvo a conectar a la BD con psycopg2 y el código SQL pasa correctamente.
        - Añadida solicitud_id como foreign keys a lista_espera y plazas_asignadas. Ahora todas las tablas están interconectadas a través de la tabla solicitudes.
        - ![Alt text](images/irdiagram_01.png)
+   - 29/12/2023
+     - jumepe:⁠  ⁠selection_solicitudes con penalty factor
+     - Copia la tabla solicitudes a un df_solicitudes y ordena por putuaciones (esto lo podemos cambiar/modificar/etc, no es la parte complicada)
+     - ⁠Evalúa la primera entrada, si hay plazas en el programa lo mete (asigna esa entrada al df_asignado), multiplica el resto de entradas para ese usuario_id en el df_solicitudes por un factor de penalización, reordena df_solicitudes por puntuaciones y dropea (borra) esa entrada ya analizada de df_solicitudes
+     - ⁠Si no hay plazas, mete esa entrada en df_lista_Espera y dropea la entrada de df_lista_espera
+     - ⁠Continúa hasta que todas las solicitudes han sido evaluadas
+     - ⁠Inyecta los datos en la BD en las tablas plazas_asignadas y lista_espera y genera sus respectivas primary y foreign keys
