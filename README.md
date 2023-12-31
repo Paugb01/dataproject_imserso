@@ -124,3 +124,11 @@ Este readme sirve como guía inicial para el desarrollo del proyecto. ¡Éxito e
        - ⁠Si no hay plazas, mete esa entrada en df_lista_Espera y dropea la entrada de df_lista_espera
        - ⁠Continúa hasta que todas las solicitudes han sido evaluadas
        - ⁠Inyecta los datos en la BD en las tablas plazas_asignadas y lista_espera y genera sus respectivas primary y foreign keys
+ - 31/12/2023:
+     - jumepe: modificado SQL para añadir la columna 'prioridad' en solicitudes
+     - jumepe: modificado process_usuarios.py:
+       - Asigna un número a cada solicitud por combinación usuario_id/programa_id empezando por 1 para la primera combinación e incrementando 1 cada vez que combina.
+     - jumepe: modificado selection_solicitudes.py:
+       - Cuando lee la tabla solicitudes para pasarla a un dataframe, primero ordena por puntuacion y luego por prioridad
+       - Luego si una solicitud es asignada a plazas_asiganadas, aplica la penalización al resto de solicitudes de ese usuario_id y dropea la entrada evaluada
+       - Tras dropear la entrada, vuelve a ordenar por puntiacion y prioridad, y vuelve a iterar la siguiente entrada hasta que todas las entradas han sido asignadas.

@@ -66,6 +66,7 @@ CREATE TABLE public.solicitudes (
     usuario_id varchar(50) NOT NULL,
     programa_id int4 NULL,
     puntuacion int4 null,
+    prioridad int4 null,
     CONSTRAINT solicitud_pkey PRIMARY KEY (solicitud_id),
     CONSTRAINT solicitudes_usuario_id_fkey FOREIGN KEY (usuario_id) REFERENCES public.usuarios (usuario_id),
     CONSTRAINT solicitudes_programa_id_fkey FOREIGN KEY (programa_id) REFERENCES public.programas (programa_id)

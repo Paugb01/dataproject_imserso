@@ -34,7 +34,7 @@ penalty_factor = 0.75
 query_solicitudes = """
     SELECT *
     FROM solicitudes
-    ORDER BY puntuacion DESC
+    ORDER BY puntuacion DESC, prioridad ASC;
 """
 
 df_solicitudes = pd.read_sql_query(query_solicitudes, engine)
@@ -65,11 +65,12 @@ while not df_solicitudes.empty:
         penalty_mask = (df_solicitudes['usuario_id'] == usuario_id)
         df_solicitudes.loc[penalty_mask, 'puntuacion'] *= penalty_factor
 
-        # Resort the dataframe by puntuacion
-        df_solicitudes.sort_values(by='puntuacion', ascending=False, inplace=True)
-
         # Drop the processed row
         df_solicitudes.drop(df_solicitudes.index[0], inplace=True)
+
+        # Sort df_solicitudes by puntuacion and prioridad
+        df_solicitudes.sort_values(by=['puntuacion', 'prioridad'], ascending=[False, True], inplace=True)
+
 
     else:
         # Move to df_lista_espera with espera_id column
@@ -87,7 +88,7 @@ df_asignado.drop(columns=['row_num'], inplace=True, errors='ignore')
 df_lista_espera.drop(columns=['row_num'], inplace=True, errors='ignore')
 
 # Convert 'solicitud_id' and other 'numpy.int64' columns to Python integers
-int_columns = ['solicitud_id', 'programa_id', 'puntuacion']
+int_columns = ['solicitud_id', 'programa_id', 'puntuacion', 'prioridad']
 df_asignado[int_columns] = df_asignado[int_columns].astype(int)
 df_lista_espera[int_columns] = df_lista_espera[int_columns].astype(int)
 
@@ -106,10 +107,6 @@ df_asignado.to_sql('plazas_asignadas', engine, if_exists='replace', index=False,
 # Store df_lista_espera in 'lista_espera' table with espera_id as SERIAL
 df_lista_espera.reset_index(drop=True, inplace=True)
 df_lista_espera.to_sql('lista_espera', engine, if_exists='replace', index=False)
-
-# Display the count of selected entries in df_asignado and df_lista_espera
-print("\nCount of selected entries in df_asignado:", len(df_asignado))
-print("Count of entries in df_lista_espera:", len(df_lista_espera))
 
 # Connect to PostgreSQL database
 connection = psycopg2.connect(**db_params)
