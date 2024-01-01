@@ -132,3 +132,8 @@ Este readme sirve como guía inicial para el desarrollo del proyecto. ¡Éxito e
        - Cuando lee la tabla solicitudes para pasarla a un dataframe, primero ordena por puntuacion y luego por prioridad
        - Luego si una solicitud es asignada a plazas_asiganadas, aplica la penalización al resto de solicitudes de ese usuario_id y dropea la entrada evaluada
        - Tras dropear la entrada, vuelve a ordenar por puntiacion y prioridad, y vuelve a iterar la siguiente entrada hasta que todas las entradas han sido asignadas.
+ - 1/1/2024:
+     - jumepe: modificado gen_datos_programas:
+       - Fechas de viaje de noviembre a junio.
+       - Programas de costa: 8 o 10 días.
+       - Programas de interior (circuitos, naturaleza, etc.): de 4 a 6 días.

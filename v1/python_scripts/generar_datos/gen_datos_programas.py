@@ -31,40 +31,37 @@ def generar_datos_fake_programas(cantidad):
         plazas = random.randint(20, 50)
         origen = faker.city()
 
-        if tipo_turismo == 'interior':
+        if tipo_turismo == 'costa peninsular' or tipo_turismo == 'costa insular':
             fecha_salida = faker.date_between_dates(
-                date_start=datetime.date(2023, 12, 1),
-                date_end=datetime.date(2024, 2, 29)
+                date_start=datetime.date(2023, 11, 1),
+                date_end=datetime.date(2024, 6, 30)
             )
-            fecha_vuelta = faker.date_between_dates(
-                date_start=fecha_salida,
-                date_end=datetime.date(2024, 2, 29)
-            )
-        elif tipo_turismo == 'costa peninsular':
+    
+            # Randomly choose between 8 and 10 days for the duration of the trip
+            trip_duration = random.choice([8, 10])
+            
+            # Calculate fecha_vuelta based on fecha_salida and trip_duration
+            fecha_vuelta = fecha_salida + datetime.timedelta(days=trip_duration)
+        
+        elif tipo_turismo == 'interior':
             fecha_salida = faker.date_between_dates(
-                date_start=datetime.date(2023, 12, 1),
-                date_end=datetime.date(2024, 2, 29)
+                date_start=datetime.date(2023, 11, 1),
+                date_end=datetime.date(2024, 6, 30)
             )
-            fecha_vuelta = faker.date_between_dates(
-                date_start=fecha_salida,
-                date_end=datetime.date(2024, 2, 29)
-            )
-        elif tipo_turismo == 'costa insular':
-            fecha_salida = faker.date_between_dates(
-                date_start=datetime.date(2023, 12, 1),
-                date_end=datetime.date(2024, 2, 29)
-            )
-            fecha_vuelta = faker.date_between_dates(
-                date_start=fecha_salida,
-                date_end=datetime.date(2024, 2, 29)
-            )
+    
+            # Randomly choose between 8 and 10 days for the duration of the trip
+            trip_duration = random.choice([4, 5, 6])
+            
+            # Calculate fecha_vuelta based on fecha_salida and trip_duration
+            fecha_vuelta = fecha_salida + datetime.timedelta(days=trip_duration)
+
 
         programas.append([j, nombre_programa,tipo_turismo, plazas, origen, destino.capitalize(), fecha_salida, fecha_vuelta])
 
     return programas
     
 # Generate fake data for programas
-cantidad_programas = 10  # Specify the number of rows you want
+cantidad_programas = 100  # Specify the number of rows you want
 programas = generar_datos_fake_programas(cantidad_programas)
 
 # DATAFRAME PRINCIPAL

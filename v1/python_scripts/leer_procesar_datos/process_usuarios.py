@@ -178,8 +178,9 @@ try:
     # Dictionary to store the count of combinations for each usuario_id-programa_id pair
     combination_count = {}
 
-    # Generate 500 unique combinations of usuario_id and programa_id
-    for i in range(500):
+    # Generate n unique combinations of usuario_id and programa_id
+    n = 500
+    for i in range(n):
         usuario_id = np.random.choice(df_usuarios_from_db['usuario_id'])
         puntos_usuario = df_usuarios_from_db.loc[df_usuarios_from_db['usuario_id'] == usuario_id, 'puntos'].values[0]
 
