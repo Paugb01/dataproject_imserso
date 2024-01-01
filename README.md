@@ -61,7 +61,7 @@ Este readme sirve como guía inicial para el desarrollo del proyecto. ¡Éxito e
 -  Trabajo inmediato:
    -  Inyectar datos en tabla usuarios (100 basta para probar)
    -  Inyectar datos en tabla programas:
-      -  2 programas por región de destino (costa insular, costa peninsular, interior y ya iremos ampliando y definiendo cuando funcione) y origen diferente.
+     -  2 programas por región de destino (costa insular, costa peninsular, interior y ya iremos ampliando y definiendo cuando funcione) y origen diferente.
    - Inyectar datos en la tabla solicitudes:
      - Hacer combinaciones de usuario_id y programa_id (que no se repitan, es decir un mismo usuario no puede solicitar lo mismo dos veces)
      - Como idea: cada usuario pida todos los programas una vez, en esta MVP serían 100 usuarios * 6 programas (3 regiones, 2 programas por región) = 600 solicitudes, ¿no?
@@ -94,9 +94,9 @@ Este readme sirve como guía inicial para el desarrollo del proyecto. ¡Éxito e
        - Un usuario_id puede combinar con más de un programa_id, pero no dos veces el mismo.
        - Por cada solicitud, hay una puntuación correspondiente al usuario. Esto en verdad se podría haber hecho con algún query supongo, pero creo que en la tabla será más fácil evaluar las solicitudes. Lo podemos cambiar en el futuro.
        - ![Alt text](images/solicitudes_01.png)
-   - 25/12/2023:
+ - 25/12/2023:
      - jumepe: creado código selection_solicitudes.py que evalúa las solicitudes por puntuación, para cada programa_id:
-       - Va por cada solicitud para cada programa_id y rankea las solicitudes por puntos.
+      - Va por cada solicitud para cada programa_id y rankea las solicitudes por puntos.
        - Lee de la tabla programas las plazas que tiene cada programa_id
        - La más alta la mete en un dataframe llamado 'plazas_asignadas' SI quedan plazas
        - Pasa a la siguiente y hace lo mismo, pero si no quedan plazas lo mete en un dataframe 'espera'
@@ -108,7 +108,7 @@ Este readme sirve como guía inicial para el desarrollo del proyecto. ¡Éxito e
          - El problema debe de estar relacionado con cómo sqlalchemy ejecuta el código SQL. Sin embargo, sqlalchemy es necesario para realizar las operaciones con Pandas, así que al final del código vuelvo a conectar a la BD con psycopg2 y el código SQL pasa correctamente.
        - Añadida solicitud_id como foreign keys a lista_espera y plazas_asignadas. Ahora todas las tablas están interconectadas a través de la tabla solicitudes.
        - ![Alt text](images/irdiagram_01.png)
-- 28/12/2023:
+  - 28/12/2023:
      - tumup: 
        - Se añaden los criterios viudedad, participación años anteriores, enfermedad y antecedentes a la tabla gen_datos_v1
        - Se modifica docker y conexión a BBDD en función de los nuevos nombres de los ficheros
@@ -117,8 +117,32 @@ Este readme sirve como guía inicial para el desarrollo del proyecto. ¡Éxito e
        - Se modifica fichero sql para que la nueva base levante con todos los campos necesarios
        - Se añade lógica en el fichero gen_datos_programas para que los destinos generados sean los destinos reales del imserso
        - Se crean funciones en fichero process_usuario para puntuar los nuevos criterios
-       - 
-       - 
-       - 
-       - 
-       - 
+ - 29/12/2023
+     - jumepe:⁠  ⁠selection_solicitudes con penalty factor
+       - Copia la tabla solicitudes a un df_solicitudes y ordena por putuaciones (esto lo podemos cambiar/modificar/etc, no es la parte complicada)
+       - ⁠Evalúa la primera entrada, si hay plazas en el programa lo mete (asigna esa entrada al df_asignado), multiplica el resto de entradas para ese usuario_id en el df_solicitudes por un factor de penalización, reordena df_solicitudes por puntuaciones y dropea (borra) esa entrada ya analizada de df_solicitudes
+       - ⁠Si no hay plazas, mete esa entrada en df_lista_Espera y dropea la entrada de df_lista_espera
+       - ⁠Continúa hasta que todas las solicitudes han sido evaluadas
+       - ⁠Inyecta los datos en la BD en las tablas plazas_asignadas y lista_espera y genera sus respectivas primary y foreign keys
+ - 31/12/2023:
+     - jumepe: modificado SQL para añadir la columna 'prioridad' en solicitudes
+     - jumepe: modificado process_usuarios.py:
+       - Asigna un número a cada solicitud por combinación usuario_id/programa_id empezando por 1 para la primera combinación e incrementando 1 cada vez que combina.
+     - jumepe: modificado selection_solicitudes.py:
+       - Cuando lee la tabla solicitudes para pasarla a un dataframe, primero ordena por puntuacion y luego por prioridad
+       - Luego si una solicitud es asignada a plazas_asiganadas, aplica la penalización al resto de solicitudes de ese usuario_id y dropea la entrada evaluada
+       - Tras dropear la entrada, vuelve a ordenar por puntiacion y prioridad, y vuelve a iterar la siguiente entrada hasta que todas las entradas han sido asignadas.
+ - 1/1/2024:
+     - jumepe: modificado gen_datos_programas:
+       - Fechas de viaje de noviembre a junio.
+       - Programas de costa: 8 o 10 días.
+       - Programas de interior (circuitos, naturaleza, etc.): de 4 a 6 días.
+     - jumepe: modificado SQL:
+       - Añade columnas 'acompanante', 'acompanante_renta' y 'acompanante_edad' a la tabla 'solicitudes'
+     - jumepe: modificado process_usuarios:
+       - Tras leer la tabla usuarios y pasarla a un dataframe:
+         - Añade columna 'acompanante' y establece valores aleartorios donde un 25% de las entradas (acomp_factor = 0.25) = True
+         - Aquellas entradas con 'acompanante' = True:
+           - Asigna valores aleatorios entre 200 y 3000 a la columna 'acompanante_renta'
+           - Asigna valores aleatorios entre 18 y 110 a la columna 'acompanante_edad'
+           - Recalcula la columna edad (media aritmnética) y renta (suma de ambas dividida entre 1.33)
