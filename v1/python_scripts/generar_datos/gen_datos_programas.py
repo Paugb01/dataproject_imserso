@@ -61,7 +61,7 @@ def generar_datos_fake_programas(cantidad):
     return programas
     
 # Generate fake data for programas
-cantidad_programas = 100  # Specify the number of rows you want
+cantidad_programas = 10  # Specify the number of rows you want
 programas = generar_datos_fake_programas(cantidad_programas)
 
 # DATAFRAME PRINCIPAL

@@ -137,3 +137,12 @@ Este readme sirve como guía inicial para el desarrollo del proyecto. ¡Éxito e
        - Fechas de viaje de noviembre a junio.
        - Programas de costa: 8 o 10 días.
        - Programas de interior (circuitos, naturaleza, etc.): de 4 a 6 días.
+     - jumepe: modificado SQL:
+       - Añade columnas 'acompanante', 'acompanante_renta' y 'acompanante_edad' a la tabla 'solicitudes'
+     - jumepe: modificado process_usuarios:
+       - Tras leer la tabla usuarios y pasarla a un dataframe:
+         - Añade columna 'acompanante' y establece valores aleartorios donde un 25% de las entradas (acomp_factor = 0.25) = True
+         - Aquellas entradas con 'acompanante' = True:
+           - Asigna valores aleatorios entre 200 y 3000 a la columna 'acompanante_renta'
+           - Asigna valores aleatorios entre 18 y 110 a la columna 'acompanante_edad'
+           - Recalcula la columna edad (media aritmnética) y renta (suma de ambas dividida entre 1.33)

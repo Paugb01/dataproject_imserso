@@ -88,7 +88,7 @@ df_asignado.drop(columns=['row_num'], inplace=True, errors='ignore')
 df_lista_espera.drop(columns=['row_num'], inplace=True, errors='ignore')
 
 # Convert 'solicitud_id' and other 'numpy.int64' columns to Python integers
-int_columns = ['solicitud_id', 'programa_id', 'puntuacion', 'prioridad']
+int_columns = ['solicitud_id', 'programa_id', 'puntuacion', 'prioridad', 'acompanante', 'acompanante_edad', 'acompanante_renta']
 df_asignado[int_columns] = df_asignado[int_columns].astype(int)
 df_lista_espera[int_columns] = df_lista_espera[int_columns].astype(int)
 

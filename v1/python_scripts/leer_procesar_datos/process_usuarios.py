@@ -29,8 +29,43 @@ finally:
     # Close the database connection
     conn.close()
 
-# We add the column 'puntos' to the dataframe:
+# We add the columns 'puntos', 'acompanante', 'acompanante_edad' and 'acompanante_renta' to the dataframe:
 df_usuarios_from_db['puntos'] = 0
+
+# ACOMPAÑANTE
+# We define an acomp_factor to randomly assign True or False to a % of the entries:
+acomp_factor = 0.25
+df_usuarios_from_db['acompanante'] = np.random.choice([True, False], size=len(df_usuarios_from_db), p=[acomp_factor, 1 - acomp_factor])
+
+df_usuarios_from_db['acompanante_edad'] = 0
+# Randomly assign values between 18 and 110 to the 'acompanante_edad' column where 'acompanante' is True
+df_usuarios_from_db.loc[df_usuarios_from_db['acompanante'], 'acompanante_edad'] = np.random.randint(18, 111, sum(df_usuarios_from_db['acompanante']))
+# Replace NaN values with 0 in 'acompanante_edad'
+df_usuarios_from_db['acompanante_edad'].fillna(0, inplace=True)
+# We cast the entire column to int
+df_usuarios_from_db['acompanante_edad'] = df_usuarios_from_db['acompanante_edad'].astype(int)
+
+# Randomly assign values between 200 and 3000 to 'acompanante_renta' where 'acompanante' is True
+df_usuarios_from_db['acompanante_renta'] = np.where(
+    df_usuarios_from_db['acompanante'],
+    np.random.randint(200, 3001, len(df_usuarios_from_db)),
+    0
+)
+
+# Recalculate the column renta for entries where 'acompanante' = True and cast into int
+df_usuarios_from_db.loc[df_usuarios_from_db['acompanante'], 'renta'] = ((
+    df_usuarios_from_db.loc[df_usuarios_from_db['acompanante'], 'renta'] +
+    df_usuarios_from_db.loc[df_usuarios_from_db['acompanante'], 'acompanante_renta']
+) / 1.33).astype(int)
+
+# Recalculate the column edad for entries where 'acompanante' = True and cast into int
+df_usuarios_from_db.loc[df_usuarios_from_db['acompanante'], 'edad'] = ((
+    df_usuarios_from_db.loc[df_usuarios_from_db['acompanante'], 'edad'] +
+    df_usuarios_from_db.loc[df_usuarios_from_db['acompanante'], 'acompanante_edad']
+) / 2).astype(int)
+
+# Cast the 'edad' column to a compatible dtype
+df_usuarios_from_db['edad'] = df_usuarios_from_db['edad'].astype(int)
 
 # Function to evaluate the age of each of the users in usuarios:
 def puntuar_edad(row):
@@ -172,8 +207,19 @@ try:
     programas_query = "SELECT programa_id FROM programas"
     df_programas_from_db = pd.read_sql_query(programas_query, engine)
 
-    # Create the 'solicitudes_df' DataFrame with an additional 'prioridad' column
-    solicitudes_df = pd.DataFrame(columns=['solicitud_id', 'usuario_id', 'programa_id', 'puntuacion', 'prioridad'])
+    solicitudes_df = pd.DataFrame(columns=['solicitud_id', 'usuario_id', 'programa_id', 'acompanante', 'acompanante_renta', 'acompanante_edad', 'puntuacion', 'prioridad'])
+
+    # Set data types for each column
+    solicitudes_df = solicitudes_df.astype({
+        'solicitud_id': int,
+        'usuario_id': int,
+        'programa_id': int,
+        'acompanante': bool,
+        'acompanante_renta': int,
+        'acompanante_edad': int,
+        'puntuacion': int,
+        'prioridad': int
+    })
 
     # Dictionary to store the count of combinations for each usuario_id-programa_id pair
     combination_count = {}
@@ -208,11 +254,17 @@ try:
             'solicitud_id': [i + 1],
             'usuario_id': [usuario_id],
             'programa_id': [programa_id],
+            'acompanante': [df_usuarios_from_db.loc[df_usuarios_from_db['usuario_id'] == usuario_id, 'acompanante'].values[0]],
+            'acompanante_edad': [df_usuarios_from_db.loc[df_usuarios_from_db['usuario_id'] == usuario_id, 'acompanante_edad'].values[0]],
+            'acompanante_renta': [df_usuarios_from_db.loc[df_usuarios_from_db['usuario_id'] == usuario_id, 'acompanante_renta'].values[0]],
             'puntuacion': [puntos_usuario],
             'prioridad': [prioridad]
         })], ignore_index=True)
 
+    # Cast 'puntuacion' to int
+    solicitudes_df['puntuacion'] = solicitudes_df['puntuacion'].astype(int)
     # Print the 'solicitudes_df' DataFrame for verification
+    solicitudes_df['puntuacion'] = solicitudes_df['puntuacion'].astype(int)
     print(solicitudes_df)
 
     # Insert the 'solicitudes_df' DataFrame into the 'solicitudes' table in the database
@@ -224,3 +276,22 @@ except Exception as e:
 finally:
     # Close the database connection
     engine.dispose()
+
+# SQL queries to set primary keys and foreign keys
+# Connect to PostgreSQL database
+connection = psycopg2.connect(**db_params)
+
+cursor = connection.cursor()
+alter_query_solicitudes = """
+    ALTER TABLE solicitudes
+    ADD PRIMARY KEY (solicitud_id),
+    ADD FOREIGN KEY (usuario_id) REFERENCES usuarios(usuario_id),
+    ADD FOREIGN KEY (programa_id) REFERENCES programas(programa_id);
+"""
+
+# Execute SQL queries
+cursor.execute(alter_query_solicitudes)
+
+# Commit and close the connection
+connection.commit()
+connection.close()
