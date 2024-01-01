@@ -52,14 +52,21 @@ while not df_solicitudes.empty:
     available_plazas = plazas_dict.get(programa_id, 0)
 
     if available_plazas > 0:
+        # Check if 'acompanante' is True
+        is_acompanante = top_entry['acompanante']
+
+        # Subtract 2 from available_plazas if 'acompanante' is True, otherwise subtract 1
+        allocation_count = 2 if is_acompanante else 1
+
         # Allocate to df_asignado with asignada_id column
-        df_asignado = pd.concat([df_asignado, top_entry.to_frame().T], ignore_index=True)
-        df_asignado.loc[df_asignado.index[-1], 'asignada_id'] = next_asignada_id
-        df_asignado['asignada_id'] = df_asignado['asignada_id'].astype(int)
-        available_plazas -= 1
-        plazas_dict[programa_id] = available_plazas  # Reduce available places
-        print(f"Solicitud {solicitud_id}: Allocated to df_asignado. Available plazas for programa_id {programa_id}: {available_plazas}")
-        next_asignada_id += 1  # Increment asignada_id
+        for _ in range(allocation_count):
+            df_asignado = pd.concat([df_asignado, top_entry.to_frame().T], ignore_index=True)
+            df_asignado.loc[df_asignado.index[-1], 'asignada_id'] = next_asignada_id
+            df_asignado['asignada_id'] = df_asignado['asignada_id'].astype(int)
+            available_plazas -= 1
+            plazas_dict[programa_id] = available_plazas  # Reduce available places
+            print(f"Solicitud {solicitud_id}: Allocated to df_asignado. Available plazas for programa_id {programa_id}: {available_plazas}")
+            next_asignada_id += 1  # Increment asignada_id
 
         # Apply penalty factor to remaining entries for the same usuario_id
         penalty_mask = (df_solicitudes['usuario_id'] == usuario_id)
@@ -70,6 +77,7 @@ while not df_solicitudes.empty:
 
         # Sort df_solicitudes by puntuacion and prioridad
         df_solicitudes.sort_values(by=['puntuacion', 'prioridad'], ascending=[False, True], inplace=True)
+
 
 
     else:
