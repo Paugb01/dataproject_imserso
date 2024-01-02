@@ -33,7 +33,7 @@ def generar_datos_fake_programas(cantidad):
         destino = random.choice(destinos)
 
      # Verificar si hay plazas disponibles para el destino
-        if plazas_por_destino[destino] > 0:
+        while plazas_por_destino[destino] > 0:
             # Asegurarse de no asignar más plazas de las disponibles
             plazas_disponibles = min(plazas_por_destino[destino],100)  # Máximo 10 plazas por vez
             plazas = min(random.randint(1, plazas_disponibles), plazas_disponibles)
