@@ -147,4 +147,4 @@ Este readme sirve como guía inicial para el desarrollo del proyecto. ¡Éxito e
            - Asigna valores aleatorios entre 18 y 110 a la columna 'acompanante_edad'
            - Recalcula la columna edad (media aritmnética) y renta (suma de ambas dividida entre 1.33)
  - 2/1/2024:
-     - jumepe: cerramos v1, abrimos v2 (tunear, escalar, visualizar)
+     - jumepe: Cerramos v1, abrimos v2 (tunear, escalar, visualizar)
