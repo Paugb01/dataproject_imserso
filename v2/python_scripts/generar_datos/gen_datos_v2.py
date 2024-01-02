@@ -9,7 +9,7 @@ import time
 
 # Antes de ejecutar el scrip va a retrasar 15 segundos para que de tiempo que se levante la base de datos "imserso_jmp.sql" y que no hayan errores por ejecutar todo rapido
 
-time.sleep(15)
+time.sleep(1)
 
 #CREACIÓN DATOS
 
@@ -33,7 +33,7 @@ def generar_datos_fake(cantidad):
     for j in range(cantidad):
         nombre = unicodedata.normalize('NFKD', faker.first_name()).encode('ascii', 'ignore').decode('utf-8')
         apellido = unicodedata.normalize('NFKD', faker.last_name()).encode('ascii', 'ignore').decode('utf-8')
-        nif = faker.nif()
+        nif = faker.unique.nif()
         beta_values = np.random.beta(2, 5)
         edad = beta_values * (110 - 55) + 55 # Distribuye edad
         year_nacimiento = 2023 - round(edad)
@@ -59,7 +59,7 @@ def generar_datos_fake(cantidad):
         jubilados.append([nombre,apellido,nif,fecha_nacimiento,edad,discapacidad,renta,enfermedad,viudedad,pa21_22,viajes_21_22,pa22_23,viajes_22_23,tipo_familia,antecedentes]) 
     return jubilados 
 
-jubilados = generar_datos_fake(100) 
+jubilados = generar_datos_fake(100000) 
 
 
 #DATAFRAME PRINCIPAL
@@ -67,7 +67,7 @@ df = pd.DataFrame(jubilados,columns =['nombre','apellido','nif','fecha_nacimient
 print(df)
 
 
-#DATADRAMEs SECUNDARIOS
+#DATADRAME SECUNDARIO
 df_usuarios = df[['nombre','apellido','nif','fecha_nacimiento','edad','discapacidad','renta','enfermedad','viudedad','pa21_22','viajes_21_22','pa22_23','viajes_22_23','tipo_familia','antecedentes']]
 
 

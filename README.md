@@ -148,3 +148,12 @@ Este readme sirve como guía inicial para el desarrollo del proyecto. ¡Éxito e
            - Recalcula la columna edad (media aritmnética) y renta (suma de ambas dividida entre 1.33)
  - 2/1/2024:
      - jumepe: Cerramos v1, abrimos v2 (tunear, escalar, visualizar)
+  - 2/1/2024:
+     - tumup: modificado gen_datos_v2:
+       - NIF generado ahora es único, la renta debería devolver un valor siempre positivo.
+      - Documentación para enfermedades:
+        - Basandonos en el informe anual del ministerio de salud del año 20,21 y en los datos obtenidos respecto a enfermedades crónicas y de larga evolución ofrecido por el INE, hemos determinado unos porcentajes que se corresponen en cierta medida con la realidad de las personas majores en España. [Link al informe del ministerio](https://www.sanidad.gob.es/estadEstudios/estadisticas/sisInfSanSNS/tablasEstadisticas/InfAnualSNS2020_21/INFORME_ANUAL_2020_21.pdf) [Link al INE](https://www.ine.es/jaxi/Tabla.htm?path=/t00/mujeres_hombres/tablas_1/l0/&file=d03005.px&L=0)
+      - Documentación para discapacidad:
+        - Para documentar la discapacidad hemos recurido a varias fuentes, hemos hecho uso de un informe facilitado por el propio Imserso, y de los datos ofrecidos por el INE. [Link al informe del Imserso](https://imserso.es/documents/20123/146998/bdepcd_2022.pdf/390b54fe-e541-3f22-ba1a-8991c5efc88f)[Link al INE](https://www.ine.es/jaxi/Tabla.htm?tpx=51614&L=0)
+      - Documentación para viudedad: 
+        -  Para documentar la viudedad hemos recurrido a un informe procedente de la Unión Democrática de Pensionistas y Jubilados de España [Link al informe de UDP](https://mayoresudp.org/wp-content/uploads/2014/09/IM-2017-10-JUL-Informe.pdf)
