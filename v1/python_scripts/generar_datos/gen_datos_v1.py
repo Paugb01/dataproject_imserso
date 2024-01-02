@@ -21,7 +21,7 @@ def generar_datos_fake(cantidad):
     tipo_discapacidad = [0,1,2] # Tipos discapacidad: 0 - No presentan discapacidad o es leve (0% < x < 32%) , 1 - Entre 33% < x < 49% , 2 - Mayor al 50%
     prob_viajes21_22 =[2,3] # Viajes realizados: 2: 1 viaje 3: 2 viajes o mas
     prob_viajes22_23 =[2,3] # Viajes realizados: 2: 1 viaje 3: 2 viajes o mas
-    espera_viajes21_22 = [0,1] # 0:No realizo viajes , 1 :Quedo en lista de espera
+    esper_viajes21_22 = [0,1] # 0:No realizo viajes , 1 :Quedo en lista de espera
     espera_viajes22_23 = [0,1] # 0:No realizo viajes , 1 :Quedo en lista de espera
     viud = [0,1] # 0 = no ser viudo, 1 = viudo
     tipo_antecedentes = [0,1,2] # Tipo antecedentes: 0 - No tiene antecedentes  , 1 Leves, 2 Graves
@@ -34,17 +34,21 @@ def generar_datos_fake(cantidad):
         nombre = unicodedata.normalize('NFKD', faker.first_name()).encode('ascii', 'ignore').decode('utf-8')
         apellido = unicodedata.normalize('NFKD', faker.last_name()).encode('ascii', 'ignore').decode('utf-8')
         nif = faker.nif()
-        fecha_nacimiento = faker.date_of_birth(minimum_age=55, maximum_age=110)
-        edad = hoy.year - fecha_nacimiento.year - ((hoy.month, hoy.day) < (fecha_nacimiento.month, fecha_nacimiento.day))
+        beta_values = np.random.beta(2, 5)
+        edad = beta_values * (110 - 55) + 55 # Distribuye edad
+        year_nacimiento = 2023 - round(edad)
+        start = datetime.date(year_nacimiento,1,1)
+        end = datetime.date(year_nacimiento,12,31)
+        fecha_nacimiento = faker.date_between_dates(date_start=start, date_end=end) # Calcula fecha nacimiento 
         discapacidad = np.random.choice(tipo_discapacidad, p=(0.57, 0.36, 0.07), size=1)[0]
-        renta = np.random.normal(1.829,800)
+        renta = np.random.pareto(3, size=None) * 1400 + 500 
         enfermedad = np.random.choice([True, False], p=(0.083, 0.917), size=1)[0]
         viudedad = np.random.choice(viud, p=(0.707, 0.293), size=1)[0]
         pa21_22 = random.choice([True, False]) # Participación año 21-22
         if pa21_22 is True:
             viajes_21_22 = np.random.choice(prob_viajes21_22, p=(0.70, 0.30), size=1)[0]
         else:
-            viajes_21_22 = np.random.choice(espera_viajes21_22, p=(0.70, 0.30), size=1)[0]
+            viajes_21_22 = np.random.choice(esper_viajes21_22, p=(0.70, 0.30), size=1)[0]
         pa22_23 = random.choice([True, False]) # Participación año 22-23
         if pa22_23 is True:
             viajes_22_23 = np.random.choice(prob_viajes22_23, p=(0.70, 0.30), size=1)[0]
