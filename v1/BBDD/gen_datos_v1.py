@@ -34,10 +34,14 @@ def generar_datos_fake(cantidad):
         nombre = unicodedata.normalize('NFKD', faker.first_name()).encode('ascii', 'ignore').decode('utf-8')
         apellido = unicodedata.normalize('NFKD', faker.last_name()).encode('ascii', 'ignore').decode('utf-8')
         nif = faker.nif()
-        fecha_nacimiento = faker.date_of_birth(minimum_age=55, maximum_age=110)
-        edad = hoy.year - fecha_nacimiento.year - ((hoy.month, hoy.day) < (fecha_nacimiento.month, fecha_nacimiento.day))
+        beta_values = np.random.beta(2, 5)
+        edad = beta_values * (110 - 55) + 55 # Distribuye edad
+        year_nacimiento = 2023 - round(edad)
+        start = datetime.date(year_nacimiento,1,1)
+        end = datetime.date(year_nacimiento,12,31)
+        fecha_nacimiento = faker.date_between_dates(date_start=start, date_end=end) # Calcula fecha nacimiento 
         discapacidad = np.random.choice(tipo_discapacidad, p=(0.57, 0.36, 0.07), size=1)[0]
-        renta = random.uniform(484.61,3175)
+        renta = np.random.pareto(3, size=None) * 1400 + 500 
         enfermedad = np.random.choice([True, False], p=(0.083, 0.917), size=1)[0]
         viudedad = np.random.choice(viud, p=(0.707, 0.293), size=1)[0]
         pa21_22 = random.choice([True, False]) # Participación año 21-22
