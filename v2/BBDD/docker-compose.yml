@@ -13,7 +13,7 @@ services:
     ports:
       - "5432:5432"
     volumes:     
-      - ./imserso_v1.sql:/docker-entrypoint-initdb.d/imserso_v1.sql
+      - ./imserso_v2.sql:/docker-entrypoint-initdb.d/imserso_v2.sql
         
   python_bdd_imserso:
       container_name: python
