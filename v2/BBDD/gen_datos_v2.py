@@ -35,7 +35,7 @@ def generar_datos_fake(cantidad):
         apellido = unicodedata.normalize('NFKD', faker.last_name()).encode('ascii', 'ignore').decode('utf-8')
         nif = faker.nif()
         beta_values = np.random.beta(2, 5)
-        edad = beta_values * (110 - 55) + 55 # Distribuye edad
+        edad = round(beta_values * (110 - 55) + 55) # Distribuye edad
         year_nacimiento = 2023 - round(edad)
         start = datetime.date(year_nacimiento,1,1)
         end = datetime.date(year_nacimiento,12,31)

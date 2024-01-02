@@ -147,8 +147,13 @@ Este readme sirve como guía inicial para el desarrollo del proyecto. ¡Éxito e
            - Asigna valores aleatorios entre 18 y 110 a la columna 'acompanante_edad'
            - Recalcula la columna edad (media aritmnética) y renta (suma de ambas dividida entre 1.33)
  - 2/1/2024:
+   - Paugb124: modificado gen_datos_v1
+     - Edad mínima 55 años y máxima 110. Media entorno a unos 75 años. Asumimos una distribución con sesgo positivo en nuestra base de datos. (cuanto más mayor más dificultad de acceso a las herramientas de solicitud) Elegimos distribución beta con α=2 β=5.
+     - También modificado generación datos renta para una distribución de pareto, apropiada para modelar este tipo de eventos. α=3. Regla 80/20 --> el 80% del peso del peso de ingresos lo soporta el 20% de los datos en x.
+     - Reparado error decimales de edad truncada en v2.
+ - 2/1/2024:
      - jumepe: Cerramos v1, abrimos v2 (tunear, escalar, visualizar)
-  - 2/1/2024:
+ - 2/1/2024:
      - tumup: modificado gen_datos_v2:
        - NIF generado ahora es único, la renta debería devolver un valor siempre positivo.
       - Documentación para enfermedades:
@@ -157,3 +162,4 @@ Este readme sirve como guía inicial para el desarrollo del proyecto. ¡Éxito e
         - Para documentar la discapacidad hemos recurido a varias fuentes, hemos hecho uso de un informe facilitado por el propio Imserso, y de los datos ofrecidos por el INE. [Link al informe del Imserso](https://imserso.es/documents/20123/146998/bdepcd_2022.pdf/390b54fe-e541-3f22-ba1a-8991c5efc88f)[Link al INE](https://www.ine.es/jaxi/Tabla.htm?tpx=51614&L=0)
       - Documentación para viudedad: 
         -  Para documentar la viudedad hemos recurrido a un informe procedente de la Unión Democrática de Pensionistas y Jubilados de España [Link al informe de UDP](https://mayoresudp.org/wp-content/uploads/2014/09/IM-2017-10-JUL-Informe.pdf)
+ 
