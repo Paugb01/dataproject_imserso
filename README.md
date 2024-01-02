@@ -162,4 +162,7 @@ Este readme sirve como guía inicial para el desarrollo del proyecto. ¡Éxito e
         - Para documentar la discapacidad hemos recurido a varias fuentes, hemos hecho uso de un informe facilitado por el propio Imserso, y de los datos ofrecidos por el INE. [Link al informe del Imserso](https://imserso.es/documents/20123/146998/bdepcd_2022.pdf/390b54fe-e541-3f22-ba1a-8991c5efc88f)[Link al INE](https://www.ine.es/jaxi/Tabla.htm?tpx=51614&L=0)
       - Documentación para viudedad: 
         -  Para documentar la viudedad hemos recurrido a un informe procedente de la Unión Democrática de Pensionistas y Jubilados de España [Link al informe de UDP](https://mayoresudp.org/wp-content/uploads/2014/09/IM-2017-10-JUL-Informe.pdf)
+     - Modificación en gen_datos_programas.py
+       - Se modifican los programas a 25(total oferrtado), se indica la cantidad generada para cada destino con la información facilitada por el imserso. Para los destinos que no se facilita información y estan englobados dentro de las categorias Viajes Culturales, Turismo Naturaleza y Capitales de provincia se realiza una media del total de las plazas ofertadas y se distribuye entre los destinos de forma equitativa.
+       - Se genera función que itere según las plazas disponibles y vaya asignandolas en tandas de 100 hasta que no queden plazas disponibles.
  
