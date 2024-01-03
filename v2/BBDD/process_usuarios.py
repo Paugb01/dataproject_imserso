@@ -197,7 +197,7 @@ print(df_usuarios_from_db)
 # Now we generate petitions
 
 # Database connection URI
-db_uri = 'postgresql+psycopg2://postgres:Welcome01@localhost:5432/postgres'
+db_uri = 'postgresql+psycopg2://postgres:Welcome01@postgres:5432/postgres'
 
 try:
     # Connect to the database
