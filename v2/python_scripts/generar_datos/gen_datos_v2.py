@@ -9,7 +9,7 @@ import time
 
 # Antes de ejecutar el scrip va a retrasar 15 segundos para que de tiempo que se levante la base de datos "imserso_jmp.sql" y que no hayan errores por ejecutar todo rapido
 
-time.sleep(1)
+time.sleep(15)
 
 #CREACIÓN DATOS
 
@@ -59,7 +59,7 @@ def generar_datos_fake(cantidad):
         jubilados.append([nombre,apellido,nif,fecha_nacimiento,edad,discapacidad,renta,enfermedad,viudedad,pa21_22,viajes_21_22,pa22_23,viajes_22_23,tipo_familia,antecedentes]) 
     return jubilados 
 
-jubilados = generar_datos_fake(100000) 
+jubilados = generar_datos_fake(3000000) 
 
 
 #DATAFRAME PRINCIPAL
@@ -73,11 +73,11 @@ df_usuarios = df[['nombre','apellido','nif','fecha_nacimiento','edad','discapaci
 
  #CONEXIÓN BBDD
 conn = psycopg2.connect(
-    database="postgres", 
+    database="postgres",
     user='postgres',
-    password="Welcome01", 
-    host='localhost', 
-    port= '5432'
+    password="Welcome01",
+    host='localhost',
+    port='5432'
 )
 
 try:
