@@ -33,7 +33,7 @@ def generar_datos_fake(cantidad):
     for j in range(cantidad):
         nombre = unicodedata.normalize('NFKD', faker.first_name()).encode('ascii', 'ignore').decode('utf-8')
         apellido = unicodedata.normalize('NFKD', faker.last_name()).encode('ascii', 'ignore').decode('utf-8')
-        nif = faker.nif()
+        nif = faker.unique.nif()
         beta_values = np.random.beta(2, 5)
         edad = round(beta_values * (110 - 55) + 55) # Distribuye edad
         year_nacimiento = 2023 - round(edad)
@@ -59,7 +59,7 @@ def generar_datos_fake(cantidad):
         jubilados.append([nombre,apellido,nif,fecha_nacimiento,edad,discapacidad,renta,enfermedad,viudedad,pa21_22,viajes_21_22,pa22_23,viajes_22_23,tipo_familia,antecedentes]) 
     return jubilados 
 
-jubilados = generar_datos_fake(100) 
+jubilados = generar_datos_fake(4000000) 
 
 
 #DATAFRAME PRINCIPAL
@@ -67,17 +67,17 @@ df = pd.DataFrame(jubilados,columns =['nombre','apellido','nif','fecha_nacimient
 print(df)
 
 
-#DATADRAMEs SECUNDARIOS
+#DATADRAME SECUNDARIO
 df_usuarios = df[['nombre','apellido','nif','fecha_nacimiento','edad','discapacidad','renta','enfermedad','viudedad','pa21_22','viajes_21_22','pa22_23','viajes_22_23','tipo_familia','antecedentes']]
 
 
  #CONEXIÓN BBDD
 conn = psycopg2.connect(
-    database="postgres", 
+    database="postgres",
     user='postgres',
-    password="Welcome01", 
-    host='postgres', 
-    port= '5432'
+    password="Welcome01",
+    host='postgres',
+    port='5432'
 )
 
 try:
