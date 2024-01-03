@@ -70,7 +70,7 @@ while not df_solicitudes.empty:
 
         # Apply penalty factor to remaining entries for the same usuario_id
         penalty_mask = (df_solicitudes['usuario_id'] == usuario_id)
-        df_solicitudes.loc[penalty_mask, 'puntuacion'] *= penalty_factor
+        df_solicitudes.loc[penalty_mask, 'puntuacion'] = (df_solicitudes.loc[penalty_mask, 'puntuacion'] * penalty_factor).astype(int)
 
         # Drop the processed row
         df_solicitudes.drop(df_solicitudes.index[0], inplace=True)
