@@ -34,9 +34,8 @@ def generar_datos_fake_programas():
         # Verificar si hay plazas disponibles para el destino
         if plazas_por_destino[destino] > 0:
             # Asegurarse de no asignar más plazas de las disponibles
-            plazas_disponibles = min(plazas_por_destino[destino], 100)  # Máximo 100 plazas por vez
-            plazas = min(plazas_disponibles, plazas_por_destino[destino])  # Consumir todas las plazas disponibles
-            plazas_por_destino[destino] -= plazas  # Actualizar el contador de plazas para el destino
+            plazas_asignadas = min(plazas_por_destino[destino], 100)  # Máximo 100 plazas por vez
+            plazas_por_destino[destino] -= plazas_asignadas  # Actualizar el contador de plazas para el destino
 
             nombre_programa = f'{tipo_turismo.capitalize()} - {destino.capitalize()}'
             origen = faker.city()
@@ -60,10 +59,10 @@ def generar_datos_fake_programas():
                 # Calculate fecha_vuelta based on fecha_salida and trip_duration
                 fecha_vuelta = fecha_salida + datetime.timedelta(days=trip_duration)
 
-            programas.append([nombre_programa, tipo_turismo, plazas, origen, destino.capitalize(), fecha_salida, fecha_vuelta])
+            programas.append([nombre_programa, tipo_turismo, plazas_asignadas, origen, destino.capitalize(), fecha_salida, fecha_vuelta])
 
     # Convert the list of programs to a DataFrame
-    df_programas = pd.DataFrame(programas, columns=['nombre_programa', 'tipo_turismo', 'plazas', 'origen', 'destino', 'fecha_salida', 'fecha_vuelta'])
+    df_programas = pd.DataFrame(programas, columns=['nombre_programa', 'tipo_turismo', 'plazas_asignadas', 'origen', 'destino', 'fecha_salida', 'fecha_vuelta'])
 
     # Add 'programa_id' column with values equal to DataFrame index + 1
     df_programas.insert(0, 'programa_id', range(1, len(df_programas) + 1))
@@ -96,7 +95,7 @@ try:
             INSERT INTO programas (programa_id, nombre_programa, plazas, origen, destino, fecha_salida, fecha_vuelta)
             VALUES (%s, %s, %s, %s, %s, %s, %s)
             """,
-            (row['programa_id'], row['nombre_programa'], row['plazas'], row['origen'], row['destino'], row['fecha_salida'], row['fecha_vuelta'])
+            (row['programa_id'], row['nombre_programa'], row['plazas_asignadas'], row['origen'], row['destino'], row['fecha_salida'], row['fecha_vuelta'])
         )
     conn.commit()
     print("Inserción exitosa en la base de datos.")
