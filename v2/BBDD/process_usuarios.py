@@ -124,7 +124,7 @@ df_usuarios_from_db['puntos'] = df_usuarios_from_db.apply(puntuar_renta, axis=1)
 # Function to evaluate the health status of users in usuarios:
 def puntuar_condicion_medica(row):
     if row['condicion_medica'] == True:
-        return row['puntos'] + 20
+        return row['puntos'] + 40
     else:
         return row['puntos'] + 0
 
@@ -182,9 +182,9 @@ def puntuar_antecedentes(row):
     if row['antecedentes'] == 0:
         return row['puntos']
     elif row['antecedentes'] == 1:
-        return row['puntos'] - 5
+        return row['puntos'] - 20
     else:
-        return row['puntos'] - 10
+        return row['puntos'] - 500
 
 # Pass puntuar_antecedentes function to the df:
 df_usuarios_from_db['puntos'] = df_usuarios_from_db.apply(puntuar_antecedentes, axis=1)
