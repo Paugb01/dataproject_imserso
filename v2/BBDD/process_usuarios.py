@@ -189,9 +189,7 @@ def puntuar_antecedentes(row):
 # Pass puntuar_antecedentes function to the df:
 df_usuarios_from_db['puntos'] = df_usuarios_from_db.apply(puntuar_antecedentes, axis=1)
 
-# with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
-#     print(df_usuarios_from_db)
-# df_usuarios_from_db.info()
+# Comprobamos el DataFrame df_usuarios_from_db
 print(df_usuarios_from_db)
 
 # Now we generate petitions

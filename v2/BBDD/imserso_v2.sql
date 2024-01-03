@@ -38,29 +38,6 @@ CREATE TABLE public.programas (
     CONSTRAINT programas_pkey PRIMARY KEY (programa_id)
 );
 
--- CREATE TABLE public.programassociales (
---     programasocial_id int4 NOT NULL,
---     nombre_programa varchar(50) NULL,
---     ponderacion_programa int4 NULL,
---     CONSTRAINT programassociales_pkey PRIMARY KEY (programasocial_id)
--- );
-
--- CREATE TABLE public.programausuario (
---     usuario_id int4 NOT NULL,
---     programasocial_id int4 NOT NULL,
---     CONSTRAINT programausuario_pkey PRIMARY KEY (usuario_id, programasocial_id),
---     CONSTRAINT programausuario_programasocial_id_fkey FOREIGN KEY (programasocial_id) REFERENCES public.programassociales (programasocial_id),
---     CONSTRAINT programausuario_usuario_id_fkey FOREIGN KEY (usuario_id) REFERENCES public.usuarios (usuario_id)
--- );
-
--- CREATE TABLE public.usuariosgrupos (
---     usuario_id int4 NOT NULL,
---     grupo_id int4 NOT NULL,
---     CONSTRAINT usuariosgrupos_pkey PRIMARY KEY (usuario_id, grupo_id),
---     CONSTRAINT usuariosgrupos_grupo_id_fkey FOREIGN KEY (grupo_id) REFERENCES public.grupos (grupo_id),
---     CONSTRAINT usuariosgrupos_usuario_id_fkey FOREIGN KEY (usuario_id) REFERENCES public.usuarios (usuario_id)
--- );
-
 CREATE TABLE public.solicitudes (
     solicitud_id int4 NOT NULL, 
     usuario_id varchar(50) NOT NULL,

@@ -6,69 +6,73 @@ import psycopg2
 
 # CREACIÓN DATOS
 
-
-def generar_datos_fake_programas(cantidad):
+def generar_datos_fake_programas():
     faker = Faker(['es-ES'])
     Faker.seed(1000)
     random.seed(1000)
 
     programas = []
+    plazas_por_destino = {'Andalucía': 164589, 'Aragón': 12414, 'Canarias': 89100, 'Baleares': 141389, 'Asturias': 12414, 'Cantabria': 12414,
+                          'Castilla y León': 12414, 'Castilla-La Mancha': 12414, 'Cataluña': 106322, 'Comunitat Valenciana': 155099,
+                          'Extremadura': 12414, 'Galicia': 12414, 'Madrid': 12414, 'Comunidad de Murcia': 21877,
+                          'Región de Navarra': 12414, 'Comunidad Foral de País Vasco': 12414, 'La Rioja': 12414, 'Ceuta': 550, 'Melilla': 550}
 
-    for j in range(1, cantidad + 1):
+    while any(plazas > 0 for plazas in plazas_por_destino.values()):
         tipo_turismo = random.choice(['costa insular', 'costa peninsular', 'interior'])
         
         if tipo_turismo == 'interior':
             destinos = ['Andalucía', 'Aragón', 'Canarias', 'Baleares', 'Asturias', 'Cantabria', 'Castilla y León', 'Castilla-La Mancha', 'Cataluña', 'Comunitat Valenciana', 'Extremadura', 'Galicia', 'Madrid', 'Comunidad de Murcia', 'Región de Navarra', 'Comunidad Foral de País Vasco', 'La Rioja', 'Ceuta', 'Melilla']
         elif tipo_turismo == 'costa peninsular':
-            destinos = ['Andalucía', 'Cataluña', 'Comunidad Valenciana', 'Murcia']
+            destinos = ['Andalucía', 'Cataluña', 'Comunitat Valenciana', 'Comunidad de Murcia']
         elif tipo_turismo == 'costa insular':
             destinos = ['Baleares', 'Canarias']
         else:
             destinos = []
         
         destino = random.choice(destinos)
-        nombre_programa = f'{tipo_turismo.capitalize()} - {destino.capitalize()}'
-        plazas = random.randint(20, 50)
-        origen = faker.city()
 
-        if tipo_turismo == 'interior':
-            fecha_salida = faker.date_between_dates(
-                date_start=datetime.date(2023, 12, 1),
-                date_end=datetime.date(2024, 2, 29)
-            )
-            fecha_vuelta = faker.date_between_dates(
-                date_start=fecha_salida,
-                date_end=datetime.date(2024, 2, 29)
-            )
-        elif tipo_turismo == 'costa peninsular':
-            fecha_salida = faker.date_between_dates(
-                date_start=datetime.date(2023, 12, 1),
-                date_end=datetime.date(2024, 2, 29)
-            )
-            fecha_vuelta = faker.date_between_dates(
-                date_start=fecha_salida,
-                date_end=datetime.date(2024, 2, 29)
-            )
-        elif tipo_turismo == 'costa insular':
-            fecha_salida = faker.date_between_dates(
-                date_start=datetime.date(2023, 12, 1),
-                date_end=datetime.date(2024, 2, 29)
-            )
-            fecha_vuelta = faker.date_between_dates(
-                date_start=fecha_salida,
-                date_end=datetime.date(2024, 2, 29)
-            )
+        # Verificar si hay plazas disponibles para el destino
+        if plazas_por_destino[destino] > 0:
+            # Asegurarse de no asignar más plazas de las disponibles
+            plazas_asignadas = min(plazas_por_destino[destino], 100)  # Máximo 100 plazas por vez
+            plazas_por_destino[destino] -= plazas_asignadas  # Actualizar el contador de plazas para el destino
 
-        programas.append([j, nombre_programa,tipo_turismo, plazas, origen, destino.capitalize(), fecha_salida, fecha_vuelta])
+            nombre_programa = f'{tipo_turismo.capitalize()} - {destino.capitalize()}'
+            origen = faker.city()
 
-    return programas
-    
+            if tipo_turismo == 'costa peninsular' or tipo_turismo == 'costa insular':
+                fecha_salida = faker.date_between_dates(
+                    date_start=datetime.date(2023, 11, 1),
+                    date_end=datetime.date(2024, 6, 30)
+                )
+                # Randomly choose between 8 and 10 days for the duration of the trip
+                trip_duration = random.choice([8, 10])
+                # Calculate fecha_vuelta based on fecha_salida and trip_duration
+                fecha_vuelta = fecha_salida + datetime.timedelta(days=trip_duration)
+            elif tipo_turismo == 'interior':
+                fecha_salida = faker.date_between_dates(
+                    date_start=datetime.date(2023, 11, 1),
+                    date_end=datetime.date(2024, 6, 30)
+                )
+                # Randomly choose between 8 and 10 days for the duration of the trip
+                trip_duration = random.choice([4, 5, 6])
+                # Calculate fecha_vuelta based on fecha_salida and trip_duration
+                fecha_vuelta = fecha_salida + datetime.timedelta(days=trip_duration)
+
+            programas.append([nombre_programa, tipo_turismo, plazas_asignadas, origen, destino.capitalize(), fecha_salida, fecha_vuelta])
+
+    # Convert the list of programs to a DataFrame
+    df_programas = pd.DataFrame(programas, columns=['nombre_programa', 'tipo_turismo', 'plazas_asignadas', 'origen', 'destino', 'fecha_salida', 'fecha_vuelta'])
+
+    # Add 'programa_id' column with values equal to DataFrame index + 1
+    df_programas.insert(0, 'programa_id', range(1, len(df_programas) + 1))
+
+    return df_programas
+
 # Generate fake data for programas
-cantidad_programas = 10  # Specify the number of rows you want
-programas = generar_datos_fake_programas(cantidad_programas)
+df_programas = generar_datos_fake_programas()
 
-# DATAFRAME PRINCIPAL
-df_programas = pd.DataFrame(programas, columns=['programa_id','nombre_programa','tipo_turismo', 'plazas', 'origen', 'destino', 'fecha_salida', 'fecha_vuelta'])
+# Print the DataFrame
 print(df_programas)
 
 
@@ -91,7 +95,7 @@ try:
             INSERT INTO programas (programa_id, nombre_programa, plazas, origen, destino, fecha_salida, fecha_vuelta)
             VALUES (%s, %s, %s, %s, %s, %s, %s)
             """,
-            (row['programa_id'], row['nombre_programa'], row['plazas'], row['origen'], row['destino'], row['fecha_salida'], row['fecha_vuelta'])
+            (row['programa_id'], row['nombre_programa'], row['plazas_asignadas'], row['origen'], row['destino'], row['fecha_salida'], row['fecha_vuelta'])
         )
     conn.commit()
     print("Inserción exitosa en la base de datos.")
