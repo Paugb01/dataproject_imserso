@@ -165,4 +165,6 @@ Este readme sirve como guía inicial para el desarrollo del proyecto. ¡Éxito e
      - Modificación en gen_datos_programas.py
        - Se modifican los programas a 25(total oferrtado), se indica la cantidad generada para cada destino con la información facilitada por el imserso. Para los destinos que no se facilita información y estan englobados dentro de las categorias Viajes Culturales, Turismo Naturaleza y Capitales de provincia se realiza una media del total de las plazas ofertadas y se distribuye entre los destinos de forma equitativa.
        - Se genera función que itere según las plazas disponibles y vaya asignandolas en tandas de 100 hasta que no queden plazas disponibles.
- 
+  - 3/1/2024:
+     - jumepe: versión de gen_datos_programas.py modificada (gen_datos_programas_jmp.py):
+       - Genera tantos programas sean necesarios como plazas disponibles en destino, asignando 100 plazas por programa excepto los últimos, para ajustar a la cantidad final.
