@@ -168,3 +168,5 @@ Este readme sirve como guía inicial para el desarrollo del proyecto. ¡Éxito e
   - 3/1/2024:
      - jumepe: versión de gen_datos_programas.py modificada (gen_datos_programas_jmp.py):
        - Genera tantos programas sean necesarios como plazas disponibles en destino, asignando 100 plazas por programa excepto los últimos, para ajustar a la cantidad final.
+   - 3/1/2024
+     - tumup: verificamos que nueva versión genera y inserta los programas deseados sin problema y la convertimos en versión principal.
