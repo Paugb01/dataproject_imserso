@@ -1,5 +1,0 @@
-faker
-pandas
-datetime
-numpy
-psycopg2
