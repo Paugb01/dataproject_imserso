@@ -1,3 +1,7 @@
+'''
+gen_datos_v2.py: Este script genera un número solicitado de usuarios con distintos campos en un dataframe
+para poder manipular y los inserta en la tabla 'usuarios' de la BD
+'''
 import random
 from faker import Faker
 import unicodedata
@@ -12,7 +16,6 @@ import time
 time.sleep(15)
 
 #CREACIÓN DATOS
-
 
 def generar_datos_fake(cantidad):
     faker = Faker(['es-ES'])
@@ -30,11 +33,12 @@ def generar_datos_fake(cantidad):
     np.random.seed(1000)
     jubilados = []
 
+    # Bucle for para generar los campos de cada entrada
     for j in range(cantidad):
         nombre = unicodedata.normalize('NFKD', faker.first_name()).encode('ascii', 'ignore').decode('utf-8')
         apellido = unicodedata.normalize('NFKD', faker.last_name()).encode('ascii', 'ignore').decode('utf-8')
         nif = faker.unique.nif()
-        beta_values = np.random.beta(2, 5)
+        beta_values = np.random.beta(2, 5) # Utilizamos beta para generar variables aleatorias de edad que se ajusten a la distribución real.
         edad = round(beta_values * (110 - 55) + 55) # Distribuye edad
         year_nacimiento = 2023 - round(edad)
         start = datetime.date(year_nacimiento,1,1)
@@ -44,34 +48,39 @@ def generar_datos_fake(cantidad):
         renta = np.random.pareto(3, size=None) * 1400 + 500 
         enfermedad = np.random.choice([True, False], p=(0.083, 0.917), size=1)[0]
         viudedad = np.random.choice(viud, p=(0.707, 0.293), size=1)[0]
-        pa21_22 = random.choice([True, False]) # Participación año 21-22
+        # Participación en años anteriores:
+        # sea true elige un valor de prob_viajes con una probabilidad 70% , 30% . 
+        # 70% para el 2, que representa 1 viajes, y 30% para el 3 que representa 2 viajes o más.
+        # Participación año 21-22
+        pa21_22 = random.choice([True, False])
         if pa21_22 is True:
             viajes_21_22 = np.random.choice(prob_viajes21_22, p=(0.70, 0.30), size=1)[0]
         else:
             viajes_21_22 = np.random.choice(esper_viajes21_22, p=(0.70, 0.30), size=1)[0]
-        pa22_23 = random.choice([True, False]) # Participación año 22-23
+        # Participación año 22-23
+        pa22_23 = random.choice([True, False])
         if pa22_23 is True:
             viajes_22_23 = np.random.choice(prob_viajes22_23, p=(0.70, 0.30), size=1)[0]
         else:
             viajes_22_23 = np.random.choice(espera_viajes22_23, p=(0.70, 0.30), size=1)[0]
         tipo_familia = np.random.choice(tp_familia, p=(0.75, 0.20, 0.05), size=1)[0] #Selecciona un valor según el tipo de familia
         antecedentes = np.random.choice(tipo_antecedentes, p=(0.84, 0.10, 0.06), size=1)[0]
+        # Añadimos todos los campos calculados a la lista:
         jubilados.append([nombre,apellido,nif,fecha_nacimiento,edad,discapacidad,renta,enfermedad,viudedad,pa21_22,viajes_21_22,pa22_23,viajes_22_23,tipo_familia,antecedentes]) 
     return jubilados 
 
 jubilados = generar_datos_fake(100000) 
 
 
-#DATAFRAME PRINCIPAL
+# Dataframe principal: generamos el df a partir de la lista 'jubilados' y asignamos la cabecera
 df = pd.DataFrame(jubilados,columns =['nombre','apellido','nif','fecha_nacimiento','edad','discapacidad','renta','enfermedad','viudedad','pa21_22','viajes_21_22','pa22_23','viajes_22_23','tipo_familia','antecedentes'])
 print(df)
 
-
-#DATADRAME SECUNDARIO
+# Dataframe secundario: generamos el df a partir del df principal con las columnas que queremos (por ahora todos)
 df_usuarios = df[['nombre','apellido','nif','fecha_nacimiento','edad','discapacidad','renta','enfermedad','viudedad','pa21_22','viajes_21_22','pa22_23','viajes_22_23','tipo_familia','antecedentes']]
 
 
- #CONEXIÓN BBDD
+ # Conectamos a la BD (host: localhost en local, postgres en docker compose!!!)
 conn = psycopg2.connect(
     database="postgres",
     user='postgres',
