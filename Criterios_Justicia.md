@@ -154,7 +154,7 @@ El criterio de asignación de puntos para antecedentes se establece con el objet
      - Violencia doméstica grave.
      - Fraude financiero significativo.
 
-|                      |          Antes       |                     |          Ahora       |
+|                      |          Antes       |      Ahora          |                      |
 |----------------------|----------------------|---------------------|----------------------|
 | **Porcentaje**       | **Puntos**           | **Porcentaje**      | **Puntos**           |
 | Edad                 | 6,00%                | 8,00%               | 20                   |
