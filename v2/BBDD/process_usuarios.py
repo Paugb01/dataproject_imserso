@@ -124,7 +124,7 @@ df_usuarios_from_db['puntos'] = df_usuarios_from_db.apply(puntuar_renta, axis=1)
 # Function to evaluate the health status of users in usuarios:
 def puntuar_condicion_medica(row):
     if row['condicion_medica'] == True:
-        return row['puntos'] + 40
+        return row['puntos'] + 20
     else:
         return row['puntos'] + 0
 
@@ -182,14 +182,16 @@ def puntuar_antecedentes(row):
     if row['antecedentes'] == 0:
         return row['puntos']
     elif row['antecedentes'] == 1:
-        return row['puntos'] - 20
+        return row['puntos'] - 5
     else:
-        return row['puntos'] - 500
+        return row['puntos'] - 10
 
 # Pass puntuar_antecedentes function to the df:
 df_usuarios_from_db['puntos'] = df_usuarios_from_db.apply(puntuar_antecedentes, axis=1)
 
-# Comprobamos el DataFrame df_usuarios_from_db
+# with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
+#     print(df_usuarios_from_db)
+# df_usuarios_from_db.info()
 print(df_usuarios_from_db)
 
 # Now we generate petitions
@@ -223,7 +225,7 @@ try:
     combination_count = {}
 
     # Generate n unique combinations of usuario_id and programa_id
-    n = 500
+    n = 30000
     for i in range(n):
         usuario_id = np.random.choice(df_usuarios_from_db['usuario_id'])
         puntos_usuario = df_usuarios_from_db.loc[df_usuarios_from_db['usuario_id'] == usuario_id, 'puntos'].values[0]
