@@ -12,18 +12,18 @@ def generar_datos_fake_programas():
     random.seed(1000)
 
     programas = []
-    plazas_por_destino = {'Andalucía': 164589, 'Aragón': 12414, 'Canarias': 89100, 'Baleares': 141389, 'Asturias': 12414, 'Cantabria': 12414,
-                          'Castilla y León': 12414, 'Castilla-La Mancha': 12414, 'Cataluña': 106322, 'Comunitat Valenciana': 155099,
-                          'Extremadura': 12414, 'Galicia': 12414, 'Madrid': 12414, 'Comunidad de Murcia': 21877,
-                          'Región de Navarra': 12414, 'Comunidad Foral de País Vasco': 12414, 'La Rioja': 12414, 'Ceuta': 550, 'Melilla': 550}
+    plazas_por_destino = {'Andalucía': 3290, 'Aragón': 248, 'Canarias': 1782, 'Baleares': 2826, 'Asturias': 248, 'Cantabria': 248,
+                          'Castilla y León': 248, 'Castilla-La Mancha': 248, 'Cataluña': 2126, 'Comunitat Valenciana': 3100,
+                          'Extremadura': 248, 'Galicia': 248, 'Madrid': 248, 'Región de Murcia': 436,
+                          'Comunidad Foral de Navarra': 248, 'País Vasco': 248, 'La Rioja': 248, 'Ceuta': 10, 'Melilla': 10}
 
     while any(plazas > 0 for plazas in plazas_por_destino.values()):
         tipo_turismo = random.choice(['costa insular', 'costa peninsular', 'interior'])
         
         if tipo_turismo == 'interior':
-            destinos = ['Andalucía', 'Aragón', 'Canarias', 'Baleares', 'Asturias', 'Cantabria', 'Castilla y León', 'Castilla-La Mancha', 'Cataluña', 'Comunitat Valenciana', 'Extremadura', 'Galicia', 'Madrid', 'Comunidad de Murcia', 'Región de Navarra', 'Comunidad Foral de País Vasco', 'La Rioja', 'Ceuta', 'Melilla']
+            destinos = ['Andalucía', 'Aragón', 'Canarias', 'Baleares', 'Asturias', 'Cantabria', 'Castilla y León', 'Castilla-La Mancha', 'Cataluña', 'Comunitat Valenciana', 'Extremadura', 'Galicia', 'Madrid', 'Región de Murcia', 'Comunidad Foral de Navarra', 'País Vasco', 'La Rioja', 'Ceuta', 'Melilla']
         elif tipo_turismo == 'costa peninsular':
-            destinos = ['Andalucía', 'Cataluña', 'Comunitat Valenciana', 'Comunidad de Murcia']
+            destinos = ['Andalucía', 'Cataluña', 'Comunitat Valenciana', 'Región de Murcia']
         elif tipo_turismo == 'costa insular':
             destinos = ['Baleares', 'Canarias']
         else:
@@ -34,7 +34,7 @@ def generar_datos_fake_programas():
         # Verificar si hay plazas disponibles para el destino
         if plazas_por_destino[destino] > 0:
             # Asegurarse de no asignar más plazas de las disponibles
-            plazas_asignadas = min(plazas_por_destino[destino], 100)  # Máximo 100 plazas por vez
+            plazas_asignadas = min(plazas_por_destino[destino], 10)  # Máximo 10 plazas por vez
             plazas_por_destino[destino] -= plazas_asignadas  # Actualizar el contador de plazas para el destino
 
             nombre_programa = f'{tipo_turismo.capitalize()} - {destino.capitalize()}'

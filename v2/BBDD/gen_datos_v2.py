@@ -59,7 +59,7 @@ def generar_datos_fake(cantidad):
         jubilados.append([nombre,apellido,nif,fecha_nacimiento,edad,discapacidad,renta,enfermedad,viudedad,pa21_22,viajes_21_22,pa22_23,viajes_22_23,tipo_familia,antecedentes]) 
     return jubilados 
 
-jubilados = generar_datos_fake(4000000) 
+jubilados = generar_datos_fake(100000) 
 
 
 #DATAFRAME PRINCIPAL
