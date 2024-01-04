@@ -230,7 +230,7 @@ try:
     combination_count = {}
 
     # Generamos n combinaciones únicas de usuario_id and programa_id
-    n = 30000
+    n = 50000
     for i in range(n):
         usuario_id = np.random.choice(df_usuarios_from_db['usuario_id'])
         puntos_usuario = df_usuarios_from_db.loc[df_usuarios_from_db['usuario_id'] == usuario_id, 'puntos'].values[0]
