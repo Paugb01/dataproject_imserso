@@ -182,3 +182,8 @@ Este readme sirve como guía inicial para el desarrollo del proyecto. ¡Éxito e
        - ![Alt text](images/final_database_tree01.png)
        - Cambiamos scripts selection_solicitudes a condición > 1 en vez de > 0 para evitar romper solicitudes con acompañante.
          - Esto generará programas sin llenar plazas.
+   - 4/1/2024
+       - jumepe: Ajuste de escalado:
+         - Ajustamos escalado para representar el criterio de penalización global (10.000 usuarios, 50.000 solicitudes, 16.000 plazas).
+         - Forzamos que los usuarios con edad entre 55 y 60 sean viudos, para poder usar el programa.
+       -  tumuop: Creamos fichero criterios_justicia.md

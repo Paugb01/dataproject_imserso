@@ -40,6 +40,13 @@ def generar_datos_fake(cantidad):
         nif = faker.unique.nif()
         beta_values = np.random.beta(2, 5) # Utilizamos beta para generar variables aleatorias de edad que se ajusten a la distribución real.
         edad = round(beta_values * (110 - 55) + 55) # Distribuye edad
+        
+        # Forzamos que los usuarios con un rango de edad entre 55 (incluido) y 60 (excluido) sean viudos, para poder usar el Programa de Viajes de IMSERSO:
+        if 55 <= edad < 60:
+            viudedad = viud[1]
+        else:
+            viudedad = np.random.choice(viud, p=(0.707, 0.293), size=1)[0]
+        
         year_nacimiento = 2023 - round(edad)
         start = datetime.date(year_nacimiento,1,1)
         end = datetime.date(year_nacimiento,12,31)
@@ -47,7 +54,7 @@ def generar_datos_fake(cantidad):
         discapacidad = np.random.choice(tipo_discapacidad, p=(0.57, 0.36, 0.07), size=1)[0]
         renta = np.random.pareto(3, size=None) * 1400 + 500 
         enfermedad = np.random.choice([True, False], p=(0.083, 0.917), size=1)[0]
-        viudedad = np.random.choice(viud, p=(0.707, 0.293), size=1)[0]
+        
         # Participación en años anteriores:
         # sea true elige un valor de prob_viajes con una probabilidad 70% , 30% . 
         # 70% para el 2, que representa 1 viajes, y 30% para el 3 que representa 2 viajes o más.
@@ -69,18 +76,17 @@ def generar_datos_fake(cantidad):
         jubilados.append([nombre,apellido,nif,fecha_nacimiento,edad,discapacidad,renta,enfermedad,viudedad,pa21_22,viajes_21_22,pa22_23,viajes_22_23,tipo_familia,antecedentes]) 
     return jubilados 
 
-jubilados = generar_datos_fake(100000) 
+jubilados = generar_datos_fake(10000) 
 
 
 # Dataframe principal: generamos el df a partir de la lista 'jubilados' y asignamos la cabecera
-df = pd.DataFrame(jubilados,columns =['nombre','apellido','nif','fecha_nacimiento','edad','discapacidad','renta','enfermedad','viudedad','pa21_22','viajes_21_22','pa22_23','viajes_22_23','tipo_familia','antecedentes'])
+df = pd.DataFrame(jubilados, columns=['nombre', 'apellido', 'nif', 'fecha_nacimiento', 'edad', 'discapacidad', 'renta', 'enfermedad', 'viudedad', 'pa21_22', 'viajes_21_22', 'pa22_23', 'viajes_22_23', 'tipo_familia', 'antecedentes'])
 print(df)
 
 # Dataframe secundario: generamos el df a partir del df principal con las columnas que queremos (por ahora todos)
-df_usuarios = df[['nombre','apellido','nif','fecha_nacimiento','edad','discapacidad','renta','enfermedad','viudedad','pa21_22','viajes_21_22','pa22_23','viajes_22_23','tipo_familia','antecedentes']]
+df_usuarios = df[['nombre', 'apellido', 'nif', 'fecha_nacimiento', 'edad', 'discapacidad', 'renta', 'enfermedad', 'viudedad', 'pa21_22', 'viajes_21_22', 'pa22_23', 'viajes_22_23', 'tipo_familia', 'antecedentes']]
 
-
- # Conectamos a la BD (host: localhost en local, postgres en docker compose!!!)
+# Conectamos a la BD (host: localhost en local, postgres en docker compose!!!)
 conn = psycopg2.connect(
     database="postgres",
     user='postgres',
@@ -99,7 +105,7 @@ try:
             INSERT INTO usuarios (usuario_id,nombre,apellidos, edad, fecha_nacimiento, renta, tipo_discapacidad, tipo_familia, condicion_medica, viudedad, antecedentes, participacion21_22, viajes_realizados_21_22, participacion22_23, viajes_realizados_22_23)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """,
-            (row['nif'],row['nombre'], row['apellido'], row['edad'], row['fecha_nacimiento'], row['renta'], row['discapacidad'], row['tipo_familia'], row['enfermedad'],row['viudedad'],row['antecedentes'], row['pa21_22'], row['viajes_21_22'], row['pa22_23'],row['viajes_22_23'])  
+            (row['nif'], row['nombre'], row['apellido'], row['edad'], row['fecha_nacimiento'], row['renta'], row['discapacidad'], row['tipo_familia'], row['enfermedad'], row['viudedad'], row['antecedentes'], row['pa21_22'], row['viajes_21_22'], row['pa22_23'], row['viajes_22_23'])
         )
     conn.commit()
     print("Inserción exitosa en la base de datos.")
