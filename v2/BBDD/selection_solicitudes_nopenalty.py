@@ -129,13 +129,13 @@ cursor = connection.cursor()
 
 # Queries SQL para asignar primary keys y foreign keys en la tablas 'plazas_asignadas' y 'lista_espera'
 alter_query_asignadas = """
-    ALTER TABLE plazas_asignadas
+    ALTER TABLE plazas_asignadas_nopen
     ADD PRIMARY KEY (asignada_id),
     ADD FOREIGN KEY (solicitud_id) REFERENCES solicitudes(solicitud_id);
 """
 
 alter_query_espera = """
-    ALTER TABLE lista_espera
+    ALTER TABLE lista_espera_nopen
     ADD PRIMARY KEY (espera_id),
     ADD FOREIGN KEY (solicitud_id) REFERENCES solicitudes(solicitud_id);
 """
