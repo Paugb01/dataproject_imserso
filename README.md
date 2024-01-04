@@ -180,3 +180,5 @@ Este readme sirve como guía inicial para el desarrollo del proyecto. ¡Éxito e
          - Vamos adelante con 1:50
        - Añadimos script selection_solicitudes_nopenalty.py para comparar resultados sin penalización por asignación vs penalización (0.75)
        - ![Alt text](images/final_database_tree01.png)
+       - Cambiamos scripts selection_solicitudes a condición > 1 en vez de > 0 para evitar romper solicitudes con acompañante.
+         - Esto generará programas sin llenar plazas.
