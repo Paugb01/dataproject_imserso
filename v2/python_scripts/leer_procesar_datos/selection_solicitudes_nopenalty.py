@@ -51,7 +51,7 @@ while not df_solicitudes.empty:
 
     available_plazas = plazas_dict.get(programa_id, 0)
 
-    if available_plazas > 0:
+    if available_plazas > 1:
         # Check if 'acompanante' is True
         is_acompanante = top_entry['acompanante']
 
