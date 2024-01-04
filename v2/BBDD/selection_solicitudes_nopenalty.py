@@ -114,14 +114,14 @@ print(df_asignado)
 print("\nDataFrame df_lista_espera:")
 print(df_lista_espera)
 
-# Guardamos df_asignado en la tabla 'plazas_asignadas' de la BD
+# Guardamos df_asignado en la tabla 'plazas_asignadas_nopen' de la BD
 df_asignado.reset_index(drop=True, inplace=True)
 df_asignado['puntuacion'] = df_asignado['puntuacion'].astype(int)
-df_asignado.to_sql('plazas_asignadas', engine, if_exists='replace', index=False, dtype={'puntuacion': Integer})
+df_asignado.to_sql('plazas_asignadas_nopen', engine, if_exists='replace', index=False, dtype={'puntuacion': Integer})
 
-# Guardamos df_lista_espera en la tabla 'lista_espera' de la BD
+# Guardamos df_lista_espera en la tabla 'lista_espera_nopen' de la BD
 df_lista_espera.reset_index(drop=True, inplace=True)
-df_lista_espera.to_sql('lista_espera', engine, if_exists='replace', index=False)
+df_lista_espera.to_sql('lista_espera_nopen', engine, if_exists='replace', index=False)
 
 # Conectamos a la BD
 connection = psycopg2.connect(**db_params)
