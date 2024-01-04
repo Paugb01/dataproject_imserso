@@ -188,9 +188,9 @@ def puntuar_antecedentes(row):
     if row['antecedentes'] == 0:
         return row['puntos']
     elif row['antecedentes'] == 1:
-        return row['puntos'] - 5
-    else:
         return row['puntos'] - 10
+    else:
+        return row['puntos'] - 500
 
 # Pasamos la función al df:
 df_usuarios_from_db['puntos'] = df_usuarios_from_db.apply(puntuar_antecedentes, axis=1)
