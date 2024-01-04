@@ -171,3 +171,19 @@ Este readme sirve como guía inicial para el desarrollo del proyecto. ¡Éxito e
        - selection_solicitudes.py: eliminado warning de Pandas línea 73.
    - 3/1/2024
      - tumup: verificamos que nueva versión genera y inserta los programas deseados sin problema y la convertimos en versión principal.
+   - 3/1/2024
+     - jumepe: prueba a distintos escalados:
+       - 1:1: Aprox 2 días (Macbook Air M2)
+       - 1:10: Aprox 6 horas (Macbook Air M2)
+       - 1:100: Aprox 3 min (Macbook Air M2)
+       - 1:50: Aprox 12 min (Macbook Air M2)
+         - Vamos adelante con 1:50
+       - Añadimos script selection_solicitudes_nopenalty.py para comparar resultados sin penalización por asignación vs penalización (0.75)
+       - ![Alt text](images/final_database_tree01.png)
+       - Cambiamos scripts selection_solicitudes a condición > 1 en vez de > 0 para evitar romper solicitudes con acompañante.
+         - Esto generará programas sin llenar plazas.
+   - 4/1/2024
+       - jumepe: Ajuste de escalado:
+         - Ajustamos escalado para representar el criterio de penalización global (10.000 usuarios, 50.000 solicitudes, 16.000 plazas).
+         - Forzamos que los usuarios con edad entre 55 y 60 sean viudos, para poder usar el programa.
+       -  tumuop: Creamos fichero criterios_justicia.md
