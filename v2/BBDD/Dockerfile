@@ -21,8 +21,9 @@ COPY gen_datos_v2.py .
 COPY gen_datos_programas.py .
 COPY process_usuarios.py .
 COPY selection_solicitudes.py .
+COPY selection_solicitudes_nopenalty.py .
 
 
 # Ejecutando scripts 
 
-CMD [ "bash", "-c", "python gen_datos_v2.py && python gen_datos_programas.py && python process_usuarios.py && python selection_solicitudes.py" ]
+CMD [ "bash", "-c", "python gen_datos_v2.py && python gen_datos_programas.py && python process_usuarios.py && python selection_solicitudes.py && python selection_solicitudes_nopenalty.py" ]

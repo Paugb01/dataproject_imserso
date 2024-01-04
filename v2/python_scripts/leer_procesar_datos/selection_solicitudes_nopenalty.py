@@ -28,7 +28,7 @@ next_asignada_id = 1
 next_espera_id = 1
 
 # Penalty factor
-penalty_factor = 0.75
+penalty_factor = 1
 
 # Fetch solicitudes data from the database
 query_solicitudes = """
@@ -110,11 +110,11 @@ print(df_lista_espera)
 # Store df_asignado in 'plazas_asignadas' table with asignadas_id as SERIAL
 df_asignado.reset_index(drop=True, inplace=True)
 df_asignado['puntuacion'] = df_asignado['puntuacion'].astype(int)
-df_asignado.to_sql('plazas_asignadas', engine, if_exists='replace', index=False, dtype={'puntuacion': Integer})
+df_asignado.to_sql('plazas_asignadas_nopen', engine, if_exists='replace', index=False, dtype={'puntuacion': Integer})
 
 # Store df_lista_espera in 'lista_espera' table with espera_id as SERIAL
 df_lista_espera.reset_index(drop=True, inplace=True)
-df_lista_espera.to_sql('lista_espera', engine, if_exists='replace', index=False)
+df_lista_espera.to_sql('lista_espera_nopen', engine, if_exists='replace', index=False)
 
 # Connect to PostgreSQL database
 connection = psycopg2.connect(**db_params)
@@ -122,13 +122,13 @@ cursor = connection.cursor()
 
 # SQL queries to set primary keys and foreign keys
 alter_query_asignadas = """
-    ALTER TABLE plazas_asignadas
+    ALTER TABLE plazas_asignadas_nopen
     ADD PRIMARY KEY (asignada_id),
     ADD FOREIGN KEY (solicitud_id) REFERENCES solicitudes(solicitud_id);
 """
 
 alter_query_espera = """
-    ALTER TABLE lista_espera
+    ALTER TABLE lista_espera_nopen
     ADD PRIMARY KEY (espera_id),
     ADD FOREIGN KEY (solicitud_id) REFERENCES solicitudes(solicitud_id);
 """
