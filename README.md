@@ -192,6 +192,7 @@ Este readme sirve como guía inicial para el desarrollo del proyecto. ¡Éxito e
   - Entrar en v2/BBDD
   - Ejecutar docker-compose up -d
   - Comprobar BBDD utilizando DBEAVER u otro cliente de BBDD:
+    - DB tipo PostgresSQL
     - host: localhost
     - port: 5432
     - user: postgres
