@@ -187,3 +187,12 @@ Este readme sirve como guía inicial para el desarrollo del proyecto. ¡Éxito e
          - Ajustamos escalado para representar el criterio de penalización global (10.000 usuarios, 50.000 solicitudes, 16.000 plazas).
          - Forzamos que los usuarios con edad entre 55 y 60 sean viudos, para poder usar el programa.
        -  tumuop: Creamos fichero criterios_justicia.md
+  
+  # INSTRUCCIONES PARA CORRER EL CÓDIGO
+  - Entrar en v2/BBDD
+  - Ejecutar docker-compose up -d
+  - Comprobar BBDD utilizando DBEAVER u otro cliente de BBDD:
+    - host: localhost
+    - port: 5432
+    - user: postgres
+    - pass: Welcome01
